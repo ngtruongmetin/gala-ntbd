@@ -13,6 +13,7 @@ readonly NGINX_SITE_LINK="/etc/nginx/sites-enabled/${DOMAIN}"
 readonly BACKUP_DIR="${SCRIPT_DIR}/backups"
 
 CHECK_ONLY=false
+RENEWAL_DRY_RUN_FAILED=false
 
 log() { printf '\n\033[1;32m[%s]\033[0m %s\n' "${APP_NAME}" "$*"; }
 warn() { printf '\n\033[1;33m[canh bao]\033[0m %s\n' "$*" >&2; }
@@ -206,8 +207,8 @@ configure_firewall() {
   ufw status verbose
 }
 
-generate_hex() { openssl rand -hex "$1"; }
-generate_base64url() { openssl rand -base64 "$1" | tr '+/' '-_' | tr -d '=\n'; }
+generate_hex() { openssl rand -hex "$1" | tr -d '\r\n'; }
+generate_base64url() { openssl rand -base64 "$1" | tr '+/' '-_' | tr -d '=\r\n'; }
 
 get_env() {
   local key=$1
@@ -446,7 +447,11 @@ configure_https() {
   systemctl enable --now certbot.timer
   if [[ "${first_issue}" == true ]]; then
     log 'Kiem tra tu dong gia han chung chi'
-    certbot renew --dry-run
+    if ! certbot renew --dry-run; then
+      RENEWAL_DRY_RUN_FAILED=true
+      warn 'Chung chi that da duoc cai, nhung certbot renew --dry-run that bai.'
+      warn 'Deploy se tiep tuc va van bat buoc kiem tra HTTPS that. Sau deploy, chay: sudo certbot renew --dry-run'
+    fi
   fi
 }
 
@@ -561,6 +566,10 @@ final_checks() {
     ' || die "Port ${direct_port} dang bi public truc tiep."
   done
   log "Deploy hoan tat: https://${DOMAIN}"
+  if [[ "${RENEWAL_DRY_RUN_FAILED}" == true ]]; then
+    warn 'Can xu ly canh bao gia han Certbot truoc khi chung chi het han.'
+    warn 'Kiem tra: sudo journalctl -u certbot --since today && sudo certbot renew --dry-run'
+  fi
   printf '%s\n' \
     'Ban ve khong duoc tu dong mo.' \
     'Sau khi test Google va mot giao dich Pay2S that, vao /admin/cau-hinh de mo ban.' \

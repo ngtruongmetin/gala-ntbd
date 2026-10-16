@@ -106,3 +106,19 @@ Health hợp lệ trả về:
 
 Các cổng 1411, 1511 và 1611 không được mở trong firewall cloud và chỉ được bind vào
 `127.0.0.1` trên VPS.
+
+## Xử lý lỗi Certbot dry-run
+
+Nếu script báo `certbot renew --dry-run` thất bại sau khi chứng chỉ thật đã được cấp, deploy
+vẫn tiếp tục và HTTPS health check vẫn được thực hiện. Kiểm tra chứng chỉ cùng timer:
+
+```bash
+sudo certbot certificates
+sudo systemctl status certbot.timer
+sudo journalctl -u certbot --since today
+sudo certbot renew --dry-run
+```
+
+Dry-run dùng máy chủ staging của Let's Encrypt và đôi khi có thể lỗi tạm thời dù chứng chỉ thật
+đã hoạt động. Không bỏ qua cảnh báo này lâu dài; phải bảo đảm dry-run thành công trước thời điểm
+gia hạn chứng chỉ.

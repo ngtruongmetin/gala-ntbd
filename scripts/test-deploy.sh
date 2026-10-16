@@ -31,7 +31,9 @@ test_env_idempotency() {
     [[ "${first_db}" == "$(get_env POSTGRES_PASSWORD)" ]]
     [[ "${first_session}" == "$(get_env SESSION_SECRET)" ]]
     [[ "${first_qr}" == "$(get_env TICKET_QR_KEYS)" ]]
-    [[ "$(stat -c %a .env)" == '600' ]]
+    if [[ "${OSTYPE}" != msys* && "${OSTYPE}" != cygwin* ]]; then
+      [[ "$(stat -c %a .env)" == '600' ]]
+    fi
   )
 }
 
