@@ -56,6 +56,8 @@ const schema = z.object({
   GOOGLE_REDIRECT_URI: optionalUrl,
   ADMIN_EMAILS: emailList,
   PAYMENTS_ENABLED: booleanFromString,
+  EXPIRATION_SWEEP_SECONDS: z.coerce.number().int().min(5).max(300).default(10),
+  ALLOW_TRANSACTION_DATA_RESET: booleanFromString,
   TICKET_QR_ACTIVE_KEY_ID: z.string().regex(/^[a-zA-Z0-9_-]{1,32}$/),
   TICKET_QR_KEYS: z.string().min(1),
   PAY2S_WEBHOOK_TOKEN: optionalSecret,
@@ -124,6 +126,8 @@ const env = Object.freeze({
   },
   adminEmails: values.ADMIN_EMAILS,
   paymentsEnabled: values.PAYMENTS_ENABLED,
+  expirationSweepSeconds: values.EXPIRATION_SWEEP_SECONDS,
+  allowTransactionDataReset: values.ALLOW_TRANSACTION_DATA_RESET,
   ticketQr: {
     activeKeyId: values.TICKET_QR_ACTIVE_KEY_ID,
     keys: ticketQrKeys,

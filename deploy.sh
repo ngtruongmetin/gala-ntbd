@@ -282,6 +282,8 @@ initialize_env() {
   set_env GOOGLE_REDIRECT_URI "https://${DOMAIN}/api/auth/google/callback"
   set_env ADMIN_EMAILS "${admin_emails}"
   [[ -n "$(get_env PAYMENTS_ENABLED)" ]] || set_env PAYMENTS_ENABLED false
+  [[ -n "$(get_env EXPIRATION_SWEEP_SECONDS)" ]] || set_env EXPIRATION_SWEEP_SECONDS 10
+  [[ -n "$(get_env ALLOW_TRANSACTION_DATA_RESET)" ]] || set_env ALLOW_TRANSACTION_DATA_RESET false
   [[ -n "$(get_env PAY2S_VIETQR_URL)" ]] || set_env PAY2S_VIETQR_URL https://api.pay2s.vn/vietqr/generate
   [[ -n "$(get_env TICKET_QR_ACTIVE_KEY_ID)" ]] || set_env TICKET_QR_ACTIVE_KEY_ID "prod-$(date -u +%Y)-v1"
   if [[ -z "$(get_env TICKET_QR_KEYS)" || "$(get_env TICKET_QR_KEYS)" == *replace-* ]]; then

@@ -13,6 +13,8 @@
     "migrate": "node scripts/migrate.js",
     "seed:development": "node scripts/seed-development.js",
     "orders:expire": "node scripts/expire-reservations.js",
+    "orders:expire:worker": "node scripts/expire-reservations-worker.js",
+    "data:reset": "node scripts/reset-transactional-data.js",
     "test:integration": "node --test tests/orders.integration.test.js",
     "lint": "oxlint src scripts tests --deny-warnings",
     "format": "prettier --write .",

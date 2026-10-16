@@ -33,6 +33,7 @@ export function AdminOrderDetailPage() {
   const orderQuery = useQuery({
     queryKey: ['admin', 'orders', reference],
     queryFn: () => getAdminOrder(reference),
+    refetchInterval: (query) => (query.state.data?.status === 'pending_payment' ? 10_000 : false),
   });
   const order = orderQuery.data;
   const refresh = () => {

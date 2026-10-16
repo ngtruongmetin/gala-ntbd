@@ -38,6 +38,8 @@ services:
       GOOGLE_REDIRECT_URI: ${GOOGLE_REDIRECT_URI:-}
       ADMIN_EMAILS: ${ADMIN_EMAILS:-}
       PAYMENTS_ENABLED: ${PAYMENTS_ENABLED:-false}
+      EXPIRATION_SWEEP_SECONDS: ${EXPIRATION_SWEEP_SECONDS:-10}
+      ALLOW_TRANSACTION_DATA_RESET: ${ALLOW_TRANSACTION_DATA_RESET:-false}
       TICKET_QR_ACTIVE_KEY_ID: ${TICKET_QR_ACTIVE_KEY_ID:?Set TICKET_QR_ACTIVE_KEY_ID in .env}
       TICKET_QR_KEYS: ${TICKET_QR_KEYS:?Set TICKET_QR_KEYS in .env}
       PAY2S_WEBHOOK_TOKEN: ${PAY2S_WEBHOOK_TOKEN:-}
@@ -58,6 +60,40 @@ services:
       SEED_RESERVATION_MINUTES: ${SEED_RESERVATION_MINUTES:-}
     ports:
       - '127.0.0.1:1511:1511'
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  expiration-worker:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    restart: unless-stopped
+    command: ['sh', '-c', 'npm run db:wait && npm run orders:expire:worker']
+    environment:
+      NODE_ENV: production
+      PORT: 1511
+      DATABASE_URL: postgresql://${POSTGRES_USER:-gala_app}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB:-gala_ticketing}
+      DATABASE_SSL: 'false'
+      FRONTEND_ORIGIN: ${FRONTEND_ORIGIN:-http://localhost:1411}
+      CORS_ALLOWED_ORIGINS: ${CORS_ALLOWED_ORIGINS:-http://localhost:1411}
+      SESSION_SECRET: ${SESSION_SECRET:?Set SESSION_SECRET in .env}
+      SESSION_COOKIE_NAME: ${SESSION_COOKIE_NAME:-gala.sid}
+      SESSION_COOKIE_SECURE: ${SESSION_COOKIE_SECURE:-true}
+      GOOGLE_CLIENT_ID: ${GOOGLE_CLIENT_ID:-}
+      GOOGLE_CLIENT_SECRET: ${GOOGLE_CLIENT_SECRET:-}
+      GOOGLE_REDIRECT_URI: ${GOOGLE_REDIRECT_URI:-}
+      ADMIN_EMAILS: ${ADMIN_EMAILS:-}
+      PAYMENTS_ENABLED: ${PAYMENTS_ENABLED:-false}
+      EXPIRATION_SWEEP_SECONDS: ${EXPIRATION_SWEEP_SECONDS:-10}
+      ALLOW_TRANSACTION_DATA_RESET: ${ALLOW_TRANSACTION_DATA_RESET:-false}
+      TICKET_QR_ACTIVE_KEY_ID: ${TICKET_QR_ACTIVE_KEY_ID:?Set TICKET_QR_ACTIVE_KEY_ID in .env}
+      TICKET_QR_KEYS: ${TICKET_QR_KEYS:?Set TICKET_QR_KEYS in .env}
+      PAY2S_WEBHOOK_TOKEN: ${PAY2S_WEBHOOK_TOKEN:-}
+      PAY2S_VIETQR_URL: ${PAY2S_VIETQR_URL:-https://api.pay2s.vn/vietqr/generate}
+      PAYMENT_BANK_CODE: ${PAYMENT_BANK_CODE:-MB}
+      PAYMENT_ACCOUNT_NUMBER: ${PAYMENT_ACCOUNT_NUMBER:-}
+      PAYMENT_ACCOUNT_NAME: ${PAYMENT_ACCOUNT_NAME:-}
     depends_on:
       postgres:
         condition: service_healthy

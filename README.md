@@ -139,6 +139,27 @@ npm run seed:development
 npm run orders:expire --workspace backend
 ```
 
+Worker `expiration-worker` chạy độc lập mỗi `EXPIRATION_SWEEP_SECONDS` (mặc định 10 giây), nên đơn
+hết hạn được cập nhật ngay cả khi không có người dùng mở trang thanh toán.
+
+Để đưa dữ liệu bán vé về trạng thái mới triển khai nhưng vẫn giữ tài khoản, phân quyền, cấu hình
+sự kiện và đối tác, đặt tạm trong `.env`:
+
+```dotenv
+ALLOW_TRANSACTION_DATA_RESET=true
+```
+
+Sau đó chạy một trong hai lệnh:
+
+```powershell
+npm --workspace backend run data:reset -- --confirm-reset
+docker compose run --rm backend npm run data:reset -- --confirm-reset
+```
+
+Đặt lại `ALLOW_TRANSACTION_DATA_RESET=false` và khởi động lại container sau khi reset. Lệnh xóa toàn
+bộ đơn hàng, giữ chỗ, giao dịch, vé, lịch sử vé và lượt check-in trong một transaction. Không dùng
+`docker compose down -v` vì thao tác đó xóa cả database và cấu hình sự kiện.
+
 `test:integration` cần `TEST_DATABASE_URL`; suite tạo schema tạm, chạy kiểm thử concurrency thật rồi tự xóa schema.
 
 ## Migration mới

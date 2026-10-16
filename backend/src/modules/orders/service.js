@@ -215,7 +215,9 @@ async function cancelOrder(reference, actor, options = {}, dependencies = {}) {
 }
 
 async function listAdminOrders(filters) {
-  const result = await require('./repository').listAdminOrders(filters);
+  const repository = require('./repository');
+  await repository.expirePendingReservations();
+  const result = await repository.listAdminOrders(filters);
   return {
     data: result.rows.map(toOrderResponse),
     pagination: {
@@ -229,6 +231,7 @@ async function listAdminOrders(filters) {
 
 async function getAdminOrder(reference) {
   const repository = require('./repository');
+  await repository.expirePendingReservations();
   const row = await repository.lockOrder(reference, require('../../database/connection').pool);
   if (!row) throw new AppError(404, 'ORDER_NOT_FOUND', 'Không tìm thấy đơn hàng.');
   const [events, transactions, ticketRows] = await Promise.all([

@@ -1,4 +1,11 @@
-import { ArrowLeft, CalendarDays, QrCode, Ticket as TicketIcon } from 'lucide-react';
+import {
+  ArrowLeft,
+  ArrowRight,
+  CalendarDays,
+  CreditCard,
+  QrCode,
+  Ticket as TicketIcon,
+} from 'lucide-react';
 import { useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { StatusBadge } from '../components/StatusBadge';
@@ -57,6 +64,25 @@ export function AccountOrderDetailPage() {
           </div>
         </div>
       </header>
+
+      {order.status === 'pending_payment' ? (
+        <section className="mt-7 flex flex-col gap-4 border-l-4 border-coral-600 bg-coral-500/5 px-5 py-5 sm:flex-row sm:items-center sm:justify-between">
+          <div>
+            <p className="flex items-center gap-2 font-black">
+              <CreditCard className="text-coral-600" size={19} /> Đơn hàng đang chờ thanh toán
+            </p>
+            <p className="mt-1 text-sm leading-relaxed text-zinc-600 dark:text-zinc-300">
+              Quay lại mã QR chuyển khoản để hoàn tất đặt vé.
+            </p>
+          </div>
+          <Link
+            to={`/don-hang/${order.reference}`}
+            className="inline-flex min-h-11 shrink-0 items-center justify-center gap-2 rounded-md bg-coral-600 px-4 text-sm font-bold text-white transition hover:bg-coral-500 active:scale-[0.98]"
+          >
+            Tiếp tục thanh toán <ArrowRight size={17} />
+          </Link>
+        </section>
+      ) : null}
 
       <section className="mt-8" aria-labelledby="order-tickets-heading">
         <div className="flex flex-wrap items-center justify-between gap-2">

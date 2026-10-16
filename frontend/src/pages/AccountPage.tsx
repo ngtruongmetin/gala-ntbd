@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { ArrowRight, CalendarDays, ClipboardList } from 'lucide-react';
+import { ArrowRight, CalendarDays, ClipboardList, CreditCard } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { StatusBadge } from '../components/StatusBadge';
 import { cancelAccountOrder } from '../features/account/api';
@@ -92,13 +92,21 @@ export function AccountPage() {
                     </div>
                   </Link>
                   {order.status === 'pending_payment' ? (
-                    <button
-                      disabled={cancelMutation.isPending}
-                      onClick={() => cancelMutation.mutate({ reference: order.reference })}
-                      className="mt-4 text-sm font-bold text-coral-600"
-                    >
-                      Hủy đơn chưa thanh toán
-                    </button>
+                    <div className="mt-4 flex flex-wrap items-center gap-3">
+                      <Link
+                        to={`/don-hang/${order.reference}`}
+                        className="inline-flex min-h-11 items-center gap-2 rounded-md bg-coral-600 px-4 text-sm font-bold text-white transition hover:bg-coral-500 active:scale-[0.98]"
+                      >
+                        <CreditCard size={17} /> Tiếp tục thanh toán
+                      </Link>
+                      <button
+                        disabled={cancelMutation.isPending}
+                        onClick={() => cancelMutation.mutate({ reference: order.reference })}
+                        className="min-h-11 px-2 text-sm font-bold text-zinc-500 transition hover:text-coral-600 disabled:opacity-50"
+                      >
+                        Hủy đơn
+                      </button>
+                    </div>
                   ) : null}
                 </article>
               ))

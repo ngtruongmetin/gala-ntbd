@@ -136,8 +136,14 @@ export function CheckInPage() {
               },
               authQuery.data?.csrfToken ?? '',
             );
-      setResult(response);
-      setPendingScan(null);
+      if (response.result === 'success') {
+        resultOpenRef.current = false;
+        setResult(null);
+        setPendingScan(null);
+      } else {
+        setResult(response);
+        setPendingScan(null);
+      }
     } catch (scanError) {
       setError(getApiErrorMessage(scanError, 'Không thể check-in vé.'));
     } finally {

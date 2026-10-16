@@ -8,5 +8,6 @@ export function useAdminDashboard(enabled: boolean) {
     queryKey: adminDashboardQueryKey,
     queryFn: getAdminDashboard,
     enabled,
+    refetchInterval: enabled ? 10_000 : false,
   });
 }

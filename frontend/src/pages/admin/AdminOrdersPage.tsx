@@ -19,6 +19,7 @@ export function AdminOrdersPage() {
     queryKey: ['admin', 'orders', page, status, search],
     queryFn: () =>
       listAdminOrders({ page, status: status || undefined, search: search || undefined }),
+    refetchInterval: 10_000,
   });
   const result = ordersQuery.data;
 
