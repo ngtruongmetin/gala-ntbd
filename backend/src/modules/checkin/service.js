@@ -28,6 +28,26 @@ function resultForTicket(ticket) {
   return 'success';
 }
 
+async function previewQr(input, dependencies = {}) {
+  const client = dependencies.client ?? require('../../database/connection').pool;
+  const ticketRepository = dependencies.ticketsRepository ?? ticketsRepository;
+  let decoded;
+  try {
+    decoded = decryptQrPayload(input.qrToken);
+  } catch {
+    return toCheckInResponse('invalid');
+  }
+  const ticket = await ticketRepository.findTicketByQr(decoded.tid, decoded.hash, client, false);
+  return toCheckInResponse(resultForTicket(ticket), ticket);
+}
+
+async function previewManual(input, dependencies = {}) {
+  const client = dependencies.client ?? require('../../database/connection').pool;
+  const ticketRepository = dependencies.ticketsRepository ?? ticketsRepository;
+  const ticket = await ticketRepository.findTicketByCode(input.ticketCode, client);
+  return toCheckInResponse(resultForTicket(ticket), ticket);
+}
+
 async function persistResult(client, input, operator, ticket, result, checkinRepository) {
   const attempt = await checkinRepository.insertAttempt(client, {
     requestId: input.requestId,
@@ -148,4 +168,4 @@ async function undoCheckIn(ticketCode, reason, actor, dependencies = {}) {
   });
 }
 
-module.exports = { scanTicket, manualCheckIn, undoCheckIn };
+module.exports = { previewQr, previewManual, scanTicket, manualCheckIn, undoCheckIn };

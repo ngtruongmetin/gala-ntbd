@@ -8,6 +8,8 @@ const scanSchema = z
   })
   .strict();
 
+const scanPreviewSchema = scanSchema.omit({ requestId: true });
+
 const manualCheckInSchema = z
   .object({
     requestId: z.string().uuid(),
@@ -15,6 +17,14 @@ const manualCheckInSchema = z
   })
   .strict();
 
+const manualPreviewSchema = manualCheckInSchema.omit({ requestId: true });
+
 const undoSchema = z.object({ reason: z.string().trim().min(3).max(500) }).strict();
 
-module.exports = { scanSchema, manualCheckInSchema, undoSchema };
+module.exports = {
+  scanSchema,
+  scanPreviewSchema,
+  manualCheckInSchema,
+  manualPreviewSchema,
+  undoSchema,
+};

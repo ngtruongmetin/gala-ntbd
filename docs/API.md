@@ -131,6 +131,8 @@ Backend khóa dòng cấu hình khi cập nhật và không cho giảm `totalCap
 
 ## Check-in
 
+- `POST /check-in/preview/scan`: nhận QR và trả thông tin/trạng thái vé để nhân viên xác nhận, không đổi trạng thái vé.
+- `POST /check-in/preview/manual`: tra cứu mã vé dự phòng để xác nhận, không đổi trạng thái vé.
 - `POST /check-in/scan`: nhận encrypted QR, `requestId` và source `camera|usb`.
 - `POST /check-in/manual`: nhận ticket code cho trường hợp dự phòng.
 - `POST /check-in/tickets/:ticketCode/undo`: admin hoàn tác check-in có lý do.

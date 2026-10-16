@@ -1,10 +1,28 @@
 const service = require('./service');
-const { scanSchema, manualCheckInSchema, undoSchema } = require('./validation');
+const {
+  scanSchema,
+  scanPreviewSchema,
+  manualCheckInSchema,
+  manualPreviewSchema,
+  undoSchema,
+} = require('./validation');
 const { parseInput } = require('../../utils/validation');
 
 async function scan(request, response) {
   response.json({
     data: await service.scanTicket(parseInput(scanSchema, request.body), request.session.user),
+  });
+}
+
+async function previewScan(request, response) {
+  response.json({
+    data: await service.previewQr(parseInput(scanPreviewSchema, request.body)),
+  });
+}
+
+async function previewManual(request, response) {
+  response.json({
+    data: await service.previewManual(parseInput(manualPreviewSchema, request.body)),
   });
 }
 
@@ -24,4 +42,4 @@ async function undo(request, response) {
   });
 }
 
-module.exports = { scan, manual, undo };
+module.exports = { previewScan, previewManual, scan, manual, undo };

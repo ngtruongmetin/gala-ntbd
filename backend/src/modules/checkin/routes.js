@@ -9,6 +9,8 @@ const { checkInRateLimiter } = require('../../middlewares/rate-limiters');
 const checkInRouter = express.Router();
 
 checkInRouter.use(requireAuth, requireCsrf, checkInRateLimiter);
+checkInRouter.post('/preview/scan', requireCheckIn, controller.previewScan);
+checkInRouter.post('/preview/manual', requireCheckIn, controller.previewManual);
 checkInRouter.post('/scan', requireCheckIn, controller.scan);
 checkInRouter.post('/manual', requireCheckIn, controller.manual);
 checkInRouter.post('/tickets/:ticketCode/undo', requireAdmin, controller.undo);

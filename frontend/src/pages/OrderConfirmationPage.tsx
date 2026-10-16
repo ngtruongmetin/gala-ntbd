@@ -59,63 +59,80 @@ function PaymentPanel({ reference }: { reference: string }) {
 
   const data = payment.data;
   return (
-    <div className="mt-10 grid gap-8 border border-zinc-200 bg-white p-6 dark:border-zinc-800 dark:bg-zinc-900 sm:p-8 lg:grid-cols-[320px_1fr]">
-      <div className="mx-auto w-full max-w-80">
-        {qrImage ? (
-          <img
-            src={qrImage}
-            alt="Mã QR chuyển khoản thanh toán vé"
-            className="aspect-square w-full"
-          />
-        ) : null}
-      </div>
-      <div className="min-w-0">
-        <div className="flex items-center gap-2 text-coral-600 dark:text-coral-400">
-          <Clock3 size={19} />
-          <span className="font-bold">Còn {countdown} để thanh toán</span>
+    <div className="mt-10 overflow-hidden rounded-md border border-zinc-200 bg-white shadow-[0_24px_70px_-40px_rgba(24,24,27,0.45)] dark:border-zinc-800 dark:bg-zinc-900">
+      <div className="flex flex-wrap items-center justify-between gap-3 border-b border-zinc-200 bg-zinc-100/70 px-5 py-4 dark:border-zinc-800 dark:bg-zinc-950/50 sm:px-8">
+        <div>
+          <p className="text-sm font-bold text-zinc-900 dark:text-zinc-100">Thanh toán qua mã QR</p>
+          <p className="mt-0.5 text-xs text-zinc-500">Mở ứng dụng ngân hàng và quét mã bên dưới</p>
         </div>
-        <dl className="mt-6 grid gap-5">
-          <div>
-            <dt className="text-sm text-zinc-500">Ngân hàng</dt>
-            <dd className="mt-1 font-bold">{data.bankCode}</dd>
-          </div>
-          <div>
-            <dt className="text-sm text-zinc-500">Chủ tài khoản</dt>
-            <dd className="mt-1 font-bold">{data.accountName}</dd>
-          </div>
-          <div>
-            <dt className="text-sm text-zinc-500">Số tài khoản</dt>
-            <dd className="mt-1 flex items-center justify-between gap-3 font-bold">
-              <span className="break-all">{data.accountNumber}</span>
-              <button
-                type="button"
-                title="Sao chép số tài khoản"
-                onClick={() => copyToClipboard(data.accountNumber)}
-              >
-                <Copy size={18} />
-                <span className="sr-only">Sao chép số tài khoản</span>
-              </button>
-            </dd>
-          </div>
-          <div>
-            <dt className="text-sm text-zinc-500">Số tiền</dt>
-            <dd className="mt-1 text-2xl font-black">{currency.format(data.amountVnd)}</dd>
-          </div>
-          <div>
-            <dt className="text-sm text-zinc-500">Nội dung chuyển khoản</dt>
-            <dd className="mt-1 flex items-center justify-between gap-3 font-black text-coral-600">
-              <span className="break-all">{data.transferContent}</span>
-              <button
-                type="button"
-                title="Sao chép nội dung"
-                onClick={() => copyToClipboard(data.transferContent)}
-              >
-                <Copy size={18} />
-                <span className="sr-only">Sao chép nội dung</span>
-              </button>
-            </dd>
-          </div>
-        </dl>
+        <div className="inline-flex items-center gap-2 rounded-md bg-white px-3 py-2 text-coral-600 shadow-sm dark:bg-zinc-900 dark:text-coral-400">
+          <Clock3 size={17} />
+          <span className="font-mono text-sm font-black tabular-nums">{countdown}</span>
+        </div>
+      </div>
+      <div className="grid gap-8 p-5 sm:p-8 lg:grid-cols-[minmax(260px,340px)_1fr] lg:gap-12">
+        <div className="mx-auto w-full max-w-[340px]">
+          {qrImage ? (
+            <div className="payment-qr-frame relative overflow-hidden rounded-md border border-zinc-200 bg-white p-4 shadow-[0_16px_40px_-28px_rgba(24,24,27,0.6)]">
+              <img
+                src={qrImage}
+                alt="Mã QR chuyển khoản thanh toán vé"
+                className="aspect-square w-full"
+              />
+              <span className="payment-scan-line" aria-hidden="true" />
+            </div>
+          ) : null}
+          <p className="mt-4 text-center text-xs leading-relaxed text-zinc-500">
+            Căn mã QR vào giữa khung quét của ứng dụng ngân hàng
+          </p>
+        </div>
+        <div className="min-w-0">
+          <p className="text-sm font-semibold text-zinc-500">Chi tiết chuyển khoản</p>
+          <dl className="mt-4 divide-y divide-zinc-200 border-y border-zinc-200 dark:divide-zinc-800 dark:border-zinc-800">
+            <div className="grid gap-1 py-4 sm:grid-cols-[9rem_1fr] sm:items-center">
+              <dt className="text-sm text-zinc-500">Ngân hàng</dt>
+              <dd className="mt-1 font-bold">{data.bankCode}</dd>
+            </div>
+            <div className="grid gap-1 py-4 sm:grid-cols-[9rem_1fr] sm:items-center">
+              <dt className="text-sm text-zinc-500">Chủ tài khoản</dt>
+              <dd className="mt-1 font-bold">{data.accountName}</dd>
+            </div>
+            <div className="grid gap-1 py-4 sm:grid-cols-[9rem_1fr] sm:items-center">
+              <dt className="text-sm text-zinc-500">Số tài khoản</dt>
+              <dd className="mt-1 flex items-center justify-between gap-3 font-bold">
+                <span className="break-all">{data.accountNumber}</span>
+                <button
+                  type="button"
+                  title="Sao chép số tài khoản"
+                  onClick={() => copyToClipboard(data.accountNumber)}
+                  className="grid size-9 shrink-0 place-items-center rounded-md text-zinc-500 transition hover:bg-zinc-100 hover:text-coral-600 active:scale-95 dark:hover:bg-zinc-800"
+                >
+                  <Copy size={18} />
+                  <span className="sr-only">Sao chép số tài khoản</span>
+                </button>
+              </dd>
+            </div>
+            <div className="grid gap-1 py-4 sm:grid-cols-[9rem_1fr] sm:items-center">
+              <dt className="text-sm text-zinc-500">Số tiền</dt>
+              <dd className="mt-1 text-2xl font-black">{currency.format(data.amountVnd)}</dd>
+            </div>
+            <div className="grid gap-1 py-4 sm:grid-cols-[9rem_1fr] sm:items-center">
+              <dt className="text-sm text-zinc-500">Nội dung chuyển khoản</dt>
+              <dd className="mt-1 flex items-center justify-between gap-3 font-black text-coral-600">
+                <span className="break-all">{data.transferContent}</span>
+                <button
+                  type="button"
+                  title="Sao chép nội dung"
+                  onClick={() => copyToClipboard(data.transferContent)}
+                  className="grid size-9 shrink-0 place-items-center rounded-md text-zinc-500 transition hover:bg-zinc-100 hover:text-coral-600 active:scale-95 dark:hover:bg-zinc-800"
+                >
+                  <Copy size={18} />
+                  <span className="sr-only">Sao chép nội dung</span>
+                </button>
+              </dd>
+            </div>
+          </dl>
+        </div>
       </div>
     </div>
   );

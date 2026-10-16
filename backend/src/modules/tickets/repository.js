@@ -108,7 +108,7 @@ async function findTicketByCode(ticketCode, client = pool, lock = false) {
   return result.rows[0] ?? null;
 }
 
-async function findTicketByQr(ticketId, qrHash, client) {
+async function findTicketByQr(ticketId, qrHash, client, lock = true) {
   const result = await client.query(
     `
       SELECT t.*, o.order_code, o.buyer_name, o.email, o.status AS order_status,
@@ -118,7 +118,7 @@ async function findTicketByQr(ticketId, qrHash, client) {
       CROSS JOIN event_settings es
       WHERE t.id = $1 AND t.qr_token_hash = $2 AND es.singleton_key = TRUE
       LIMIT 1
-      FOR UPDATE OF t
+      ${lock ? 'FOR UPDATE OF t' : ''}
     `,
     [ticketId, qrHash],
   );

@@ -1,6 +1,30 @@
 import { apiClient } from '../../lib/api-client';
 import type { CheckInResponseData } from '../../types/checkin';
 
+export async function previewQr(
+  input: { qrToken: string; source: 'camera' | 'usb' },
+  csrfToken: string,
+): Promise<CheckInResponseData> {
+  const response = await apiClient.post<{ data: CheckInResponseData }>(
+    '/check-in/preview/scan',
+    input,
+    { headers: { 'X-CSRF-Token': csrfToken } },
+  );
+  return response.data.data;
+}
+
+export async function previewManual(
+  input: { ticketCode: string },
+  csrfToken: string,
+): Promise<CheckInResponseData> {
+  const response = await apiClient.post<{ data: CheckInResponseData }>(
+    '/check-in/preview/manual',
+    input,
+    { headers: { 'X-CSRF-Token': csrfToken } },
+  );
+  return response.data.data;
+}
+
 export async function scanQr(
   input: { requestId: string; qrToken: string; source: 'camera' | 'usb' },
   csrfToken: string,

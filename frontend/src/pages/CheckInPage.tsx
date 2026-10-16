@@ -1,10 +1,26 @@
 import { BrowserQRCodeReader, type IScannerControls } from '@zxing/browser';
 import { BarcodeFormat, DecodeHintType } from '@zxing/library';
-import { Camera, Flashlight, Keyboard, RotateCcw, ScanLine, Square } from 'lucide-react';
+import {
+  Camera,
+  CheckCircle2,
+  Flashlight,
+  Keyboard,
+  LoaderCircle,
+  RotateCcw,
+  ScanLine,
+  Square,
+  X,
+} from 'lucide-react';
 import { FormEvent, useEffect, useRef, useState } from 'react';
 import { StatusBadge } from '../components/StatusBadge';
 import { useAuth } from '../features/auth/use-auth';
-import { manualCheckIn, scanQr, undoCheckIn } from '../features/checkin/api';
+import {
+  manualCheckIn,
+  previewManual,
+  previewQr,
+  scanQr,
+  undoCheckIn,
+} from '../features/checkin/api';
 import { getGoogleLoginUrl } from '../lib/api-client';
 import { getApiErrorMessage } from '../lib/api-error';
 import type { CheckInResponseData } from '../types/checkin';
@@ -42,6 +58,7 @@ export function CheckInPage() {
   const controlsRef = useRef<IScannerControls | null>(null);
   const inFlightRef = useRef(new Set<string>());
   const recentlySeenRef = useRef(new Map<string, number>());
+  const resultOpenRef = useRef(false);
   const codeInputRef = useRef<HTMLInputElement>(null);
   const nativeScannerActiveRef = useRef(false);
   const nativeScannerTimerRef = useRef<number | null>(null);
@@ -49,6 +66,12 @@ export function CheckInPage() {
   const [torchAvailable, setTorchAvailable] = useState(false);
   const [torchOn, setTorchOn] = useState(false);
   const [result, setResult] = useState<CheckInResponseData | null>(null);
+  const [pendingScan, setPendingScan] = useState<{
+    value: string;
+    source: 'camera' | 'usb';
+    kind: 'qr' | 'manual';
+  } | null>(null);
+  const [confirming, setConfirming] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(
@@ -64,6 +87,7 @@ export function CheckInPage() {
     const normalized = value.trim();
     const now = Date.now();
     if (
+      resultOpenRef.current ||
       inFlightRef.current.has(normalized) ||
       now - (recentlySeenRef.current.get(normalized) ?? 0) < 2_500
     )
@@ -73,22 +97,59 @@ export function CheckInPage() {
     window.setTimeout(() => recentlySeenRef.current.delete(normalized), 2_500);
     setError(null);
     try {
-      const response = normalized.startsWith('gala:')
-        ? await scanQr(
-            { requestId: crypto.randomUUID(), qrToken: normalized, source },
-            authQuery.data?.csrfToken ?? '',
-          )
-        : await manualCheckIn(
-            { requestId: crypto.randomUUID(), ticketCode: normalized.toUpperCase() },
+      const isQr = normalized.startsWith('gala:');
+      const response = isQr
+        ? await previewQr({ qrToken: normalized, source }, authQuery.data?.csrfToken ?? '')
+        : await previewManual(
+            { ticketCode: normalized.toUpperCase() },
             authQuery.data?.csrfToken ?? '',
           );
+      resultOpenRef.current = true;
+      setPendingScan({ value: normalized, source, kind: isQr ? 'qr' : 'manual' });
       setResult(response);
     } catch (scanError) {
       setError(getApiErrorMessage(scanError, 'Không thể kiểm tra vé.'));
     } finally {
       inFlightRef.current.delete(normalized);
-      codeInputRef.current?.focus();
     }
+  };
+
+  const confirmCheckIn = async () => {
+    if (!pendingScan || result?.result !== 'success') return;
+    setConfirming(true);
+    setError(null);
+    try {
+      const response =
+        pendingScan.kind === 'qr'
+          ? await scanQr(
+              {
+                requestId: crypto.randomUUID(),
+                qrToken: pendingScan.value,
+                source: pendingScan.source,
+              },
+              authQuery.data?.csrfToken ?? '',
+            )
+          : await manualCheckIn(
+              {
+                requestId: crypto.randomUUID(),
+                ticketCode: pendingScan.value.toUpperCase(),
+              },
+              authQuery.data?.csrfToken ?? '',
+            );
+      setResult(response);
+      setPendingScan(null);
+    } catch (scanError) {
+      setError(getApiErrorMessage(scanError, 'Không thể check-in vé.'));
+    } finally {
+      setConfirming(false);
+    }
+  };
+
+  const closeResult = () => {
+    resultOpenRef.current = false;
+    setResult(null);
+    setPendingScan(null);
+    setError(null);
   };
 
   const startCamera = async () => {
@@ -189,7 +250,6 @@ export function CheckInPage() {
     const value = String(form.get('code') || '').trim();
     if (value) void processToken(value, 'usb');
     event.currentTarget.reset();
-    codeInputRef.current?.focus();
   };
 
   return (
@@ -266,7 +326,6 @@ export function CheckInPage() {
               </span>
               <input
                 ref={codeInputRef}
-                autoFocus
                 name="code"
                 autoComplete="off"
                 onInput={(event) => {
@@ -280,7 +339,7 @@ export function CheckInPage() {
               Kiểm tra vé
             </button>
           </form>
-          {error ? (
+          {error && !result ? (
             <p
               role="alert"
               className="mt-4 rounded-md bg-coral-500/10 p-4 font-bold text-coral-600"
@@ -288,12 +347,41 @@ export function CheckInPage() {
               {error}
             </p>
           ) : null}
-          {result ? (
-            <div
-              className={`mt-4 rounded-md border p-5 ${result.result === 'success' ? 'border-emerald-500 bg-emerald-500/10' : 'border-coral-500 bg-coral-500/10'}`}
-            >
+          <p className="mt-3 text-xs leading-relaxed text-zinc-500">
+            Chỉ dùng ô nhập mã khi camera không thể đọc QR.
+          </p>
+        </section>
+      </div>
+      {result ? (
+        <div
+          className="fixed inset-0 z-50 grid place-items-center bg-zinc-950/70 p-4 backdrop-blur-sm"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="check-in-result-title"
+        >
+          <div className="w-full max-w-md rounded-md bg-white p-5 shadow-2xl dark:bg-zinc-900 sm:p-6">
+            <div className="flex items-start justify-between gap-4">
+              <div
+                className={`grid size-11 shrink-0 place-items-center rounded-md ${result.result === 'success' ? 'bg-emerald-100 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-400' : 'bg-coral-100 text-coral-700 dark:bg-coral-950 dark:text-coral-400'}`}
+              >
+                {result.result === 'success' ? <CheckCircle2 size={24} /> : <ScanLine size={24} />}
+              </div>
+              <button
+                type="button"
+                onClick={closeResult}
+                className="grid size-10 place-items-center rounded-md text-zinc-500 transition hover:bg-zinc-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-coral-500 dark:hover:bg-zinc-800"
+                aria-label="Đóng"
+              >
+                <X size={20} />
+              </button>
+            </div>
+            <div className="mt-5">
               <div className="flex items-center justify-between gap-3">
-                <h2 className="text-xl font-black">{resultText[result.result]}</h2>
+                <h2 id="check-in-result-title" className="text-xl font-black">
+                  {pendingScan && result.result === 'success'
+                    ? 'Xác nhận thông tin vé'
+                    : resultText[result.result]}
+                </h2>
                 <StatusBadge status={result.result} />
               </div>
               {result.ticket ? (
@@ -340,10 +428,36 @@ export function CheckInPage() {
                   <RotateCcw size={16} /> Hoàn tác
                 </button>
               ) : null}
+              {error ? <p className="mt-4 text-sm font-bold text-coral-600">{error}</p> : null}
+              <div className="mt-6 flex gap-3">
+                <button
+                  type="button"
+                  onClick={closeResult}
+                  disabled={confirming}
+                  className="h-11 flex-1 rounded-md border border-zinc-300 px-4 font-bold transition hover:bg-zinc-50 disabled:opacity-50 dark:border-zinc-700 dark:hover:bg-zinc-800"
+                >
+                  {pendingScan && result.result === 'success' ? 'Quét lại' : 'Đóng'}
+                </button>
+                {pendingScan && result.result === 'success' ? (
+                  <button
+                    type="button"
+                    onClick={confirmCheckIn}
+                    disabled={confirming}
+                    className="inline-flex h-11 flex-1 items-center justify-center gap-2 rounded-md bg-emerald-600 px-4 font-bold text-white transition hover:bg-emerald-700 active:scale-[0.98] disabled:opacity-60"
+                  >
+                    {confirming ? (
+                      <LoaderCircle className="animate-spin" size={18} />
+                    ) : (
+                      <CheckCircle2 size={18} />
+                    )}
+                    Xác nhận check-in
+                  </button>
+                ) : null}
+              </div>
             </div>
-          ) : null}
-        </section>
-      </div>
+          </div>
+        </div>
+      ) : null}
     </section>
   );
 }
