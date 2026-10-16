@@ -1,0 +1,47 @@
+{
+  "name": "@gala-ticketing/frontend",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "dev": "vite --host 0.0.0.0 --port 1411",
+    "build": "tsc -b && vite build",
+    "preview": "vite preview --host 0.0.0.0 --port 1411",
+    "lint": "oxlint src vite.config.ts --deny-warnings",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "typecheck": "tsc -b --pretty false",
+    "test": "node --test"
+  },
+  "dependencies": {
+    "@tanstack/react-query": "^5.104.0",
+    "@zxing/browser": "^0.1.5",
+    "@zxing/library": "^0.21.3",
+    "axios": "^1.20.0",
+    "jspdf": "^4.2.1",
+    "lucide-react": "^1.55.0",
+    "qrcode": "^1.5.4",
+    "qrcode.react": "^4.2.0",
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0",
+    "react-hook-form": "^7.90.0",
+    "react-router-dom": "^7.18.0",
+    "recharts": "^3.10.1",
+    "zod": "^3.25.0"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "@types/qrcode": "^1.5.6",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "@vitejs/plugin-react": "^5.1.0",
+    "autoprefixer": "^10.6.0",
+    "postcss": "^8.5.0",
+    "tailwindcss": "^3.4.19",
+    "typescript": "^5.9.0",
+    "vite": "^7.3.0"
+  }
+}

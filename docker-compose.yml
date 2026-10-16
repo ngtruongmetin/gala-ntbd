@@ -1,0 +1,79 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-gala_ticketing}
+      POSTGRES_USER: ${POSTGRES_USER:-gala_app}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in .env}
+      TZ: Asia/Ho_Chi_Minh
+    ports:
+      - '127.0.0.1:${POSTGRES_PORT:-1611}:5432'
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}']
+      interval: 5s
+      timeout: 5s
+      retries: 12
+      start_period: 5s
+
+  backend:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    restart: unless-stopped
+    environment:
+      NODE_ENV: production
+      PORT: 1511
+      DATABASE_URL: postgresql://${POSTGRES_USER:-gala_app}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB:-gala_ticketing}
+      DATABASE_SSL: 'false'
+      FRONTEND_ORIGIN: ${FRONTEND_ORIGIN:-http://localhost:1411}
+      CORS_ALLOWED_ORIGINS: ${CORS_ALLOWED_ORIGINS:-http://localhost:1411}
+      SESSION_SECRET: ${SESSION_SECRET:?Set SESSION_SECRET in .env}
+      SESSION_COOKIE_NAME: ${SESSION_COOKIE_NAME:-gala.sid}
+      SESSION_COOKIE_SECURE: ${SESSION_COOKIE_SECURE:-true}
+      GOOGLE_CLIENT_ID: ${GOOGLE_CLIENT_ID:-}
+      GOOGLE_CLIENT_SECRET: ${GOOGLE_CLIENT_SECRET:-}
+      GOOGLE_REDIRECT_URI: ${GOOGLE_REDIRECT_URI:-}
+      ADMIN_EMAILS: ${ADMIN_EMAILS:-}
+      PAYMENTS_ENABLED: ${PAYMENTS_ENABLED:-false}
+      TICKET_QR_ACTIVE_KEY_ID: ${TICKET_QR_ACTIVE_KEY_ID:?Set TICKET_QR_ACTIVE_KEY_ID in .env}
+      TICKET_QR_KEYS: ${TICKET_QR_KEYS:?Set TICKET_QR_KEYS in .env}
+      PAY2S_WEBHOOK_TOKEN: ${PAY2S_WEBHOOK_TOKEN:-}
+      PAY2S_VIETQR_URL: ${PAY2S_VIETQR_URL:-https://api.pay2s.vn/vietqr/generate}
+      PAYMENT_BANK_CODE: ${PAYMENT_BANK_CODE:-MB}
+      PAYMENT_ACCOUNT_NUMBER: ${PAYMENT_ACCOUNT_NUMBER:-}
+      PAYMENT_ACCOUNT_NAME: ${PAYMENT_ACCOUNT_NAME:-}
+      SEED_EVENT_NAME: ${SEED_EVENT_NAME:-}
+      SEED_EVENT_SUBTITLE: ${SEED_EVENT_SUBTITLE:-}
+      SEED_EVENT_VENUE: ${SEED_EVENT_VENUE:-}
+      SEED_EVENT_STARTS_AT: ${SEED_EVENT_STARTS_AT:-}
+      SEED_TICKET_PRICE_VND: ${SEED_TICKET_PRICE_VND:-}
+      SEED_TOTAL_CAPACITY: ${SEED_TOTAL_CAPACITY:-}
+      SEED_MIN_TICKETS_PER_ORDER: ${SEED_MIN_TICKETS_PER_ORDER:-}
+      SEED_MAX_TICKETS_PER_ORDER: ${SEED_MAX_TICKETS_PER_ORDER:-}
+      SEED_SALES_START_AT: ${SEED_SALES_START_AT:-}
+      SEED_SALES_END_AT: ${SEED_SALES_END_AT:-}
+      SEED_RESERVATION_MINUTES: ${SEED_RESERVATION_MINUTES:-}
+    ports:
+      - '127.0.0.1:1511:1511'
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  frontend:
+    build:
+      context: .
+      dockerfile: frontend/Dockerfile
+      args:
+        VITE_API_BASE_URL: /api
+    restart: unless-stopped
+    ports:
+      - '127.0.0.1:1411:80'
+    depends_on:
+      backend:
+        condition: service_started
+
+volumes:
+  postgres_data:

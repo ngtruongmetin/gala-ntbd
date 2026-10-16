@@ -1,0 +1,8 @@
+{
+  "categories": {
+    "correctness": "deny",
+    "suspicious": "warn",
+    "perf": "warn"
+  },
+  "ignorePatterns": ["**/dist/**", "**/node_modules/**", "**/coverage/**"]
+}

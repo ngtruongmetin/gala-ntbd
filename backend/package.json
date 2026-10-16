@@ -1,0 +1,39 @@
+{
+  "name": "@gala-ticketing/backend",
+  "version": "0.1.0",
+  "private": true,
+  "type": "commonjs",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "dev": "node --watch src/server.js",
+    "start": "node src/server.js",
+    "db:wait": "node scripts/wait-for-db.js",
+    "migrate": "node scripts/migrate.js",
+    "seed:development": "node scripts/seed-development.js",
+    "orders:expire": "node scripts/expire-reservations.js",
+    "test:integration": "node --test tests/orders.integration.test.js",
+    "lint": "oxlint src scripts tests --deny-warnings",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "typecheck": "node --check src/app.js && node --check src/server.js",
+    "test": "node --test",
+    "build": "node scripts/check-syntax.js"
+  },
+  "dependencies": {
+    "connect-pg-simple": "^10.0.0",
+    "cors": "^2.8.6",
+    "dotenv": "^18.0.0",
+    "express": "^5.3.0",
+    "express-rate-limit": "^8.7.0",
+    "express-session": "^1.19.0",
+    "helmet": "^8.3.0",
+    "multer": "^2.4.0",
+    "openid-client": "^6.8.0",
+    "pg": "^8.23.0",
+    "pino": "^10.4.0",
+    "pino-http": "^11.0.0",
+    "zod": "^3.25.0"
+  }
+}

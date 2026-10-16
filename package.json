@@ -1,0 +1,33 @@
+{
+  "name": "gala-ticketing",
+  "version": "0.1.0",
+  "private": true,
+  "engines": {
+    "node": ">=22"
+  },
+  "workspaces": [
+    "frontend",
+    "backend"
+  ],
+  "scripts": {
+    "dev": "concurrently -n api,web -c yellow,cyan \"npm run dev --workspace backend\" \"npm run dev --workspace frontend\"",
+    "dev:frontend": "npm run dev --workspace frontend",
+    "dev:backend": "npm run dev --workspace backend",
+    "lint": "npm run lint --workspaces --if-present",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "typecheck": "npm run typecheck --workspaces --if-present",
+    "test": "npm run test --workspaces --if-present",
+    "test:integration": "npm run test:integration --workspace backend",
+    "test:e2e": "playwright test",
+    "build": "npm run build --workspaces --if-present",
+    "migrate": "npm run migrate --workspace backend",
+    "seed:development": "npm run seed:development --workspace backend"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.64",
+    "concurrently": "^10.0.0",
+    "oxlint": "^1.87.0",
+    "prettier": "^3.9.0"
+  }
+}

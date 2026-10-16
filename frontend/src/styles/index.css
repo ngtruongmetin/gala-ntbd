@@ -1,0 +1,254 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    color-scheme: light dark;
+    scroll-behavior: smooth;
+    overflow-x: clip;
+  }
+
+  body {
+    margin: 0;
+    min-width: 320px;
+    min-height: 100dvh;
+    background: #fafafa;
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+    overflow-wrap: anywhere;
+  }
+
+  :where(button, a, input, select, textarea) {
+    touch-action: manipulation;
+  }
+
+  :where(button, a, input, select, textarea):focus-visible {
+    outline: 2px solid #f43f5e;
+    outline-offset: 2px;
+  }
+
+  button,
+  a {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  input,
+  select,
+  textarea {
+    color: #18181b;
+    color-scheme: light;
+    font-size: 16px;
+  }
+
+  select option {
+    background-color: #ffffff;
+    color: #18181b;
+  }
+
+  input:disabled,
+  select:disabled,
+  textarea:disabled {
+    color: #71717a;
+    opacity: 1;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    body {
+      background: #09090b;
+    }
+
+    input,
+    select,
+    textarea {
+      color: #fafafa;
+      color-scheme: dark;
+    }
+
+    select option {
+      background-color: #18181b;
+      color: #fafafa;
+    }
+
+    input:disabled,
+    select:disabled,
+    textarea:disabled {
+      color: #a1a1aa;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      scroll-behavior: auto !important;
+      transition-duration: 0.01ms !important;
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+    }
+  }
+}
+
+@layer utilities {
+  .safe-top {
+    padding-top: env(safe-area-inset-top);
+  }
+
+  .safe-bottom {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+
+  .pb-admin-nav {
+    padding-bottom: calc(6rem + env(safe-area-inset-bottom));
+  }
+
+  .text-pretty {
+    text-wrap: pretty;
+  }
+
+  @media (min-width: 1024px) {
+    .pb-admin-nav {
+      padding-bottom: 2rem;
+    }
+  }
+}
+
+@keyframes hero-stage-drift {
+  from {
+    transform: scale(1.02);
+  }
+  to {
+    transform: scale(1.09) translate3d(0, -1.5%, 0);
+  }
+}
+
+@keyframes hero-copy-enter {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 22px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes ticket-ticker {
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+@keyframes partner-marquee-forward {
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+@keyframes partner-marquee-reverse {
+  from {
+    transform: translate3d(-50%, 0, 0);
+  }
+  to {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.hero-stage-image {
+  animation: hero-stage-drift 18s ease-in-out infinite alternate;
+  will-change: transform;
+}
+
+.hero-reveal {
+  opacity: 0;
+  animation: hero-copy-enter 700ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.hero-reveal:nth-child(1) {
+  animation-delay: 80ms;
+}
+
+.hero-reveal:nth-child(2) {
+  animation-delay: 160ms;
+}
+
+.hero-reveal:nth-child(3) {
+  animation-delay: 240ms;
+}
+
+.hero-reveal:nth-child(4) {
+  animation-delay: 320ms;
+}
+
+.hero-reveal:nth-child(5) {
+  animation-delay: 400ms;
+}
+
+.hero-reveal:nth-child(6) {
+  animation-delay: 480ms;
+}
+
+.ticker-track {
+  animation: ticket-ticker 24s linear infinite;
+  will-change: transform;
+}
+
+.ticker-shell:hover .ticker-track {
+  animation-play-state: paused;
+}
+
+.partner-marquee-track {
+  animation: partner-marquee-forward 28s linear infinite;
+  will-change: transform;
+}
+
+.partner-marquee-track.is-reverse {
+  animation-name: partner-marquee-reverse;
+  animation-duration: 34s;
+}
+
+.partner-marquee:hover .partner-marquee-track,
+.partner-marquee:focus-within .partner-marquee-track {
+  animation-play-state: paused;
+}
+
+.reveal-section {
+  opacity: 0;
+  transform: translate3d(0, 28px, 0);
+  transition:
+    opacity 700ms cubic-bezier(0.22, 1, 0.36, 1),
+    transform 700ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.reveal-section.is-visible {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-stage-image,
+  .hero-reveal,
+  .ticker-track {
+    animation: none !important;
+    transform: none !important;
+  }
+
+  .partner-marquee {
+    overflow-x: auto;
+  }
+
+  .partner-marquee-track {
+    animation: none !important;
+    transform: none !important;
+  }
+
+  .hero-reveal,
+  .reveal-section {
+    opacity: 1 !important;
+  }
+
+  .reveal-section {
+    transform: none !important;
+    transition: none !important;
+  }
+}

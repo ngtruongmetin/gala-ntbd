@@ -1,0 +1,70 @@
+# Environment variables and local secrets
+.env
+.env.*
+**/.env
+**/.env.*
+!.env.example
+!.env.production.example
+!**/.env.example
+!**/.env.production.example
+
+# Dependencies
+node_modules/
+**/node_modules/
+
+# Build output and tool caches
+dist/
+**/dist/
+build/
+**/build/
+.vite/
+**/.vite/
+*.tsbuildinfo
+.cache/
+**/.cache/
+.parcel-cache/
+.turbo/
+
+# Tests and coverage
+coverage/
+**/coverage/
+test-results/
+playwright-report/
+blob-report/
+*.lcov
+
+# Logs and process files
+*.log
+logs/
+*.pid
+*.pid.lock
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Local certificates and keys
+*.pem
+*.key
+*.crt
+*.p12
+
+# Editor and operating-system files
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.DS_Store
+._*
+Thumbs.db
+Desktop.ini
+
+# Local temporary files
+tmp/
+temp/
+*.tmp
+*.bak
+
+# Deployment backups
+backups/
