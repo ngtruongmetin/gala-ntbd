@@ -154,38 +154,6 @@
   }
 }
 
-@keyframes payment-qr-scan {
-  0%,
-  100% {
-    transform: translate3d(0, -8px, 0);
-    opacity: 0;
-  }
-  12%,
-  88% {
-    opacity: 1;
-  }
-  50% {
-    transform: translate3d(0, calc(100cqw - 2.125rem), 0);
-  }
-}
-
-.payment-qr-frame {
-  container-type: inline-size;
-}
-
-.payment-scan-line {
-  position: absolute;
-  z-index: 1;
-  top: 1rem;
-  right: 1rem;
-  left: 1rem;
-  height: 2px;
-  background: #e11d48;
-  box-shadow: 0 0 12px 2px rgb(225 29 72 / 45%);
-  animation: payment-qr-scan 3.2s ease-in-out infinite;
-  will-change: transform, opacity;
-}
-
 .hero-stage-image {
   animation: hero-stage-drift 18s ease-in-out infinite alternate;
   will-change: transform;
@@ -260,8 +228,7 @@
 @media (prefers-reduced-motion: reduce) {
   .hero-stage-image,
   .hero-reveal,
-  .ticker-track,
-  .payment-scan-line {
+  .ticker-track {
     animation: none !important;
     transform: none !important;
   }
