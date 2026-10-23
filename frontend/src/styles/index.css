@@ -193,10 +193,6 @@
   will-change: transform;
 }
 
-.ticker-shell:hover .ticker-track {
-  animation-play-state: paused;
-}
-
 .partner-marquee-track {
   animation: partner-marquee-forward 28s linear infinite;
   will-change: transform;
@@ -205,11 +201,6 @@
 .partner-marquee-track.is-reverse {
   animation-name: partner-marquee-reverse;
   animation-duration: 34s;
-}
-
-.partner-marquee:hover .partner-marquee-track,
-.partner-marquee:focus-within .partner-marquee-track {
-  animation-play-state: paused;
 }
 
 .reveal-section {

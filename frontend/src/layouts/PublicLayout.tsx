@@ -11,7 +11,7 @@ export function PublicLayout() {
       >
         Đi đến nội dung chính
       </a>
-      <header className="safe-top min-h-16 border-b border-zinc-200 bg-zinc-50/95 dark:border-zinc-800 dark:bg-zinc-950/95 sm:min-h-20">
+      <header className="safe-top relative z-20 min-h-16 border-b border-zinc-200 bg-zinc-50/95 dark:border-zinc-800 dark:bg-zinc-950/95 sm:min-h-20">
         <div className="mx-auto max-w-7xl px-3 sm:px-6 lg:px-8">
           <div className="flex min-h-16 items-center justify-between gap-2 sm:min-h-20">
             <Brand />

@@ -152,15 +152,18 @@ export function HomePage() {
     <>
       <section
         id="page-top"
-        className="relative isolate min-h-[calc(100dvh-7rem)] overflow-hidden bg-zinc-900 sm:min-h-[calc(100dvh-8rem)]"
+        className="relative z-0 isolate min-h-[calc(100dvh-7rem)] overflow-hidden bg-zinc-900 sm:min-h-[calc(100dvh-8rem)]"
       >
-        <img
-          src="/images/gala-stage.jpg"
-          alt="Khán giả hòa mình trong ánh sáng sân khấu nhiều màu sắc"
-          className="hero-stage-image absolute inset-0 h-full w-full object-cover"
-          fetchPriority="high"
-        />
-        <div className="absolute inset-0 bg-zinc-950/75" aria-hidden="true" />
+        <picture className="absolute inset-0 block">
+          <source media="(max-width: 639px)" srcSet="/images/landing-mobile.png" />
+          <img
+            src="/images/landing-desktop.png"
+            alt="Khán giả hòa mình trong ánh sáng sân khấu nhiều màu sắc"
+            className="hero-stage-image h-full w-full object-cover"
+            fetchPriority="high"
+          />
+        </picture>
+        <div className="absolute inset-0 bg-zinc-950/10" aria-hidden="true" />
         <div className="relative mx-auto flex min-h-[calc(100dvh-7rem)] max-w-7xl items-center px-4 pb-12 pt-10 sm:min-h-[calc(100dvh-8rem)] sm:px-6 sm:pb-16 sm:pt-12 lg:px-8">
           <div className="w-full max-w-4xl text-zinc-50">
             {eventQuery.isPending ? <EventSkeleton /> : null}
@@ -217,7 +220,7 @@ export function HomePage() {
 
       {event ? (
         <>
-          <section className="ticker-shell overflow-hidden border-b border-coral-500 bg-coral-600 py-4 text-white">
+          <section className="ticker-shell relative z-10 overflow-hidden border-b border-coral-500 bg-coral-600 py-4 text-white">
             <div className="ticker-track flex w-max items-center" aria-label="Thông tin vé nhanh">
               {[0, 1].map((copy) => (
                 <div key={copy} className="flex shrink-0 items-center" aria-hidden={copy === 1}>
