@@ -315,13 +315,23 @@ backup_database_if_running() {
 wait_local_health() {
   local attempt payload
   for ((attempt = 1; attempt <= 60; attempt += 1)); do
-    payload=$(curl -fsS http://127.0.0.1:1411/api/health 2>/dev/null || true)
+    payload=$(curl -fsS http://127.0.0.1:1511/api/health 2>/dev/null || true)
     if grep -q '"status":"ok"' <<<"${payload}" && grep -q '"database":"connected"' <<<"${payload}"; then
       return 0
     fi
     sleep 2
   done
   return 1
+}
+
+recover_from_pay2s_start_failure() {
+  warn 'Backend khong khoi dong voi cau hinh Pay2S. Log backend truoc khi rollback:'
+  compose logs --tail=120 backend >&2 || true
+  set_env PAYMENTS_ENABLED false
+  compose up -d --force-recreate backend || true
+  wait_local_health || true
+  pause_sales_without_payments
+  die 'Pay2S da duoc tat lai. Doc log backend o tren de sua cau hinh.'
 }
 
 event_count() {
@@ -529,13 +539,8 @@ EOF
   set_env PAY2S_WEBHOOK_TOKEN "${webhook_token}"
   set_env PAYMENTS_ENABLED true
 
-  if ! compose up -d --force-recreate backend || ! wait_local_health; then
-    set_env PAYMENTS_ENABLED false
-    compose up -d --force-recreate backend || true
-    wait_local_health || true
-    pause_sales_without_payments
-    die 'Backend khong khoi dong voi cau hinh Pay2S; da tat lai thanh toan.'
-  fi
+  compose up -d --force-recreate backend || recover_from_pay2s_start_failure
+  wait_local_health || recover_from_pay2s_start_failure
   wait_https_health || die 'HTTPS health check that bai sau khi bat Pay2S.'
 
   local status

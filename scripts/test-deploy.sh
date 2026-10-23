@@ -96,6 +96,13 @@ test_launch_script_contract() {
   grep -Fq 'DELETE FROM user_sessions;' "${REPO_DIR}/backend/scripts/reset-transactional-data.js"
 }
 
+test_local_health_checks_backend_directly() {
+  grep -Fq 'http://127.0.0.1:1511/api/health' "${REPO_DIR}/deploy.sh"
+  grep -Fq 'recover_from_pay2s_start_failure' "${REPO_DIR}/deploy.sh"
+  grep -Fq 'resolver 127.0.0.11 ipv6=off' "${REPO_DIR}/frontend/nginx.conf"
+  grep -Fq 'proxy_pass http://$backend_upstream' "${REPO_DIR}/frontend/nginx.conf"
+}
+
 test_env_idempotency
 printf 'ok - env initialization is idempotent\n'
 test_pay2s_skip
@@ -106,3 +113,5 @@ test_production_domain
 printf 'ok - production deployment uses the new domain\n'
 test_launch_script_contract
 printf 'ok - launch cutover script protects reset and sales state\n'
+test_local_health_checks_backend_directly
+printf 'ok - Pay2S verifies backend health and preserves failure logs\n'
