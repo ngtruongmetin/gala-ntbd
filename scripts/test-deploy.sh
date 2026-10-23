@@ -81,9 +81,28 @@ EOF
   )
 }
 
+test_production_domain() {
+  (
+    # shellcheck source=/dev/null
+    source "${REPO_DIR}/deploy.sh"
+    [[ "${DOMAIN}" == 'gala.thptnguyentraibinhduong.edu.vn' ]]
+  )
+}
+
+test_launch_script_contract() {
+  bash -n "${REPO_DIR}/scripts/prepare-launch-domain.sh"
+  grep -Fq 'ALLOW_TRANSACTION_DATA_RESET true' "${REPO_DIR}/scripts/prepare-launch-domain.sh"
+  grep -Fq 'PAYMENTS_ENABLED false' "${REPO_DIR}/scripts/prepare-launch-domain.sh"
+  grep -Fq 'DELETE FROM user_sessions;' "${REPO_DIR}/backend/scripts/reset-transactional-data.js"
+}
+
 test_env_idempotency
 printf 'ok - env initialization is idempotent\n'
 test_pay2s_skip
 printf 'ok - Pay2S can be skipped safely\n'
 test_pay2s_enable
 printf 'ok - Pay2S enables only with complete input\n'
+test_production_domain
+printf 'ok - production deployment uses the new domain\n'
+test_launch_script_contract
+printf 'ok - launch cutover script protects reset and sales state\n'

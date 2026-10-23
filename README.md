@@ -6,7 +6,7 @@
 
 Bộ khung hệ thống bán vé riêng cho **Gala Sắc màu tuổi trẻ**. Repository là npm workspace gồm React frontend, Express API và PostgreSQL 16.
 
-Website chính thức: [sacmautuoitre.io.vn](https://sacmautuoitre.io.vn). Email liên hệ: [contact@sacmautuoitre.io.vn](mailto:contact@sacmautuoitre.io.vn).
+Website chính thức: [gala.thptnguyentraibinhduong.edu.vn](https://gala.thptnguyentraibinhduong.edu.vn). Email liên hệ vẫn là [contact@sacmautuoitre.io.vn](mailto:contact@sacmautuoitre.io.vn).
 
 ## Đã có
 
@@ -57,7 +57,7 @@ TICKET_QR_ACTIVE_KEY_ID=local-v1
 TICKET_QR_KEYS=local-v1:<base64url-encoded-32-byte-key>
 ```
 
-Production dùng authorized JavaScript origin `https://sacmautuoitre.io.vn` và redirect URI `https://sacmautuoitre.io.vn/api/auth/google/callback`. Khi chạy local, đổi hai giá trị này về origin và callback localhost tương ứng. Khi ba biến Google còn trống, API báo chưa cấu hình và frontend không giả vờ đăng nhập thành công.
+Production dùng authorized JavaScript origin `https://gala.thptnguyentraibinhduong.edu.vn` và redirect URI `https://gala.thptnguyentraibinhduong.edu.vn/api/auth/google/callback`. Khi chạy local, đổi hai giá trị này về origin và callback localhost tương ứng. Khi ba biến Google còn trống, API báo chưa cấu hình và frontend không giả vờ đăng nhập thành công.
 
 Local HTTP phải dùng `SESSION_COOKIE_SECURE=false`. Khi triển khai sau HTTPS, đặt giá trị này thành `true`.
 
@@ -65,7 +65,7 @@ Local HTTP phải dùng `SESSION_COOKIE_SECURE=false`. Khi triển khai sau HTTP
 
 `ADMIN_EMAILS` bootstrap role `super_admin`. Super-admin quản lý thêm role `admin` và `check_in` tại `/admin/nhan-su`. `TICKET_QR_ACTIVE_KEY_ID` chỉ là mã định danh, không phải secret. Khi xoay QR key, thêm key mới vào `TICKET_QR_KEYS`, đổi active ID và giữ key cũ trong key ring khi vẫn còn vé đã phát hành bằng key đó.
 
-`.env.example` là mẫu chạy local qua Vite proxy. `.env.production.example` là mẫu triển khai HTTPS tại `sacmautuoitre.io.vn`; file này không chứa secret thật và không dùng `VITE_DEV_API_PROXY_TARGET`.
+`.env.example` là mẫu chạy local qua Vite proxy. `.env.production.example` là mẫu triển khai HTTPS tại `gala.thptnguyentraibinhduong.edu.vn`; file này không chứa secret thật và không dùng `VITE_DEV_API_PROXY_TARGET`.
 
 ## Chạy local
 

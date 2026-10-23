@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -Eeuo pipefail
 
-readonly DOMAIN="sacmautuoitre.io.vn"
+readonly DOMAIN="gala.thptnguyentraibinhduong.edu.vn"
 readonly APP_NAME="gala-ticketing"
 SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
 readonly SCRIPT_DIR

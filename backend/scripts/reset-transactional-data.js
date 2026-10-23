@@ -29,8 +29,8 @@ async function resetTransactionalData() {
       DELETE FROM order_events;
       DELETE FROM inventory_reservations;
       DELETE FROM orders;
-      DELETE FROM admin_audit_events
-      WHERE entity_type IN ('order', 'ticket', 'payment_transaction');
+      DELETE FROM admin_audit_events;
+      DELETE FROM user_sessions;
     `);
     return counts;
   });

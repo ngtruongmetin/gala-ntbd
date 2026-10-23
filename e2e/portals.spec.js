@@ -138,7 +138,7 @@ test('admin can manage a landing partner', async ({ page }) => {
     headers,
     multipart: {
       name: 'Đơn vị đồng hành thử nghiệm',
-      websiteUrl: 'https://sacmautuoitre.io.vn',
+      websiteUrl: 'https://gala.thptnguyentraibinhduong.edu.vn',
       sortOrder: '999',
       active: 'true',
       logo: {

@@ -10,8 +10,8 @@ const contactLinks = [
     external: false,
   },
   {
-    href: 'https://sacmautuoitre.io.vn',
-    label: 'sacmautuoitre.io.vn',
+    href: 'https://gala.thptnguyentraibinhduong.edu.vn',
+    label: 'gala.thptnguyentraibinhduong.edu.vn',
     description: 'Trang web sự kiện',
     icon: ExternalLink,
     external: true,

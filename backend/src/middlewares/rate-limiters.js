@@ -21,6 +21,7 @@ const orderRateLimiter = createRateLimiter({ limit: 10, windowMs: 60_000 });
 const lookupRateLimiter = createRateLimiter({ limit: 30, windowMs: 60_000 });
 const adminRateLimiter = createRateLimiter({ limit: 60, windowMs: 60_000 });
 const checkInRateLimiter = createRateLimiter({ limit: 240, windowMs: 60_000 });
+const webhookRateLimiter = createRateLimiter({ limit: 60, windowMs: 60_000 });
 
 module.exports = {
   apiRateLimiter,
@@ -29,4 +30,5 @@ module.exports = {
   lookupRateLimiter,
   adminRateLimiter,
   checkInRateLimiter,
+  webhookRateLimiter,
 };

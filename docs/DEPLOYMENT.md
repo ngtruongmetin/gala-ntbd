@@ -7,7 +7,7 @@ loopback, chỉ cổng 80/443 của Nginx được public.
 ## Chuẩn bị
 
 1. Tạo VPS Ubuntu và mở TCP 80/443 trong firewall của nhà cung cấp cloud.
-2. Trỏ bản ghi A của `sacmautuoitre.io.vn` tới IPv4 công khai của VPS.
+2. Trỏ bản ghi A của `gala.thptnguyentraibinhduong.edu.vn` tới IPv4 công khai của VPS.
 3. Clone repository lên VPS. Không copy `.env` development lên production.
 4. Chuẩn bị email quản trị, email Let's Encrypt và quyền truy cập Google Cloud Console.
 
@@ -27,13 +27,30 @@ sudo ./deploy.sh
 Script sẽ hỏi cấu hình sự kiện nếu database trống. Sự kiện luôn được seed ở trạng thái tạm
 dừng bán. Secrets PostgreSQL, session và QR vé được tự sinh; `.env` được đặt quyền `600`.
 
+## Cutover launch một lần
+
+Khi chuyển từ `sacmautuoitre.io.vn`, giữ toàn bộ bản ghi email cũ (MX, SPF, DKIM, DMARC và
+mail-host records), chỉ gỡ bản ghi web cũ. Thêm origin và redirect URI của domain mới trong
+Google Cloud Console trước khi chạy:
+
+```bash
+chmod +x scripts/prepare-launch-domain.sh
+sudo ./scripts/prepare-launch-domain.sh --check
+sudo ./scripts/prepare-launch-domain.sh
+```
+
+Script yêu cầu nhập chính xác domain mới trước khi xóa vĩnh viễn dữ liệu bán vé. Nó giữ lại tài
+khoản, phân quyền, cấu hình sự kiện và đối tác; xóa đơn, vé, giao dịch, giữ chỗ, check-in, audit
+bán vé và session. Sau khi domain mới, HTTPS và đăng nhập Google đã được xác nhận, script mới gỡ
+Nginx/chứng chỉ website cũ. Bán vé vẫn ở trạng thái tạm dừng.
+
 ## Google OAuth
 
 Sau khi HTTPS hoạt động, script dừng để bạn khai báo trong Google Cloud Console:
 
 ```text
-Authorized JavaScript origin: https://sacmautuoitre.io.vn
-Authorized redirect URI:      https://sacmautuoitre.io.vn/api/auth/google/callback
+Authorized JavaScript origin: https://gala.thptnguyentraibinhduong.edu.vn
+Authorized redirect URI:      https://gala.thptnguyentraibinhduong.edu.vn/api/auth/google/callback
 ```
 
 Google Client ID và Client Secret là bắt buộc. Script chỉ kết thúc khi API xác nhận Google
@@ -44,7 +61,7 @@ OAuth khả dụng.
 Pay2S được hỏi ở bước cuối vì webhook cần website HTTPS công khai:
 
 ```text
-POST https://sacmautuoitre.io.vn/api/webhooks/pay2s
+POST https://gala.thptnguyentraibinhduong.edu.vn/api/webhooks/pay2s
 Authorization: Bearer <PAY2S_WEBHOOK_TOKEN>
 ```
 
@@ -89,7 +106,7 @@ volume PostgreSQL.
 ## Kiểm tra vận hành
 
 ```bash
-curl -fsS https://sacmautuoitre.io.vn/api/health
+curl -fsS https://gala.thptnguyentraibinhduong.edu.vn/api/health
 docker compose ps
 docker compose logs --tail=200 backend frontend
 sudo nginx -t
