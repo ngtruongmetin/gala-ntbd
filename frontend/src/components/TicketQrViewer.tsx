@@ -157,9 +157,9 @@ export function TicketQrViewer({
       role="dialog"
       aria-modal="true"
       aria-label="Mã QR vé"
-      className="fixed inset-0 z-50 h-[100dvh] bg-zinc-100 text-zinc-950 dark:bg-zinc-950 dark:text-zinc-50"
+      className="fixed inset-0 z-50 h-[100dvh] bg-zinc-100 text-zinc-950"
     >
-      <header className="safe-top absolute inset-x-0 top-0 z-10 flex min-h-16 items-center justify-between border-b border-zinc-200 bg-zinc-100/95 px-4 backdrop-blur dark:border-zinc-800 dark:bg-zinc-950/95">
+      <header className="safe-top absolute inset-x-0 top-0 z-10 flex min-h-16 items-center justify-between border-b border-zinc-200 bg-zinc-100/95 px-4 backdrop-blur">
         <button
           type="button"
           onClick={onClose}

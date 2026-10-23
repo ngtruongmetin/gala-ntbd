@@ -19,7 +19,7 @@ export function OrganizationLogo({
     <span
       role="img"
       aria-label={alt}
-      className={`grid place-items-center bg-white text-coral-600 ${className}`}
+      className={`grid place-items-center bg-white text-brand-cyan-600 ${className}`}
     >
       <Icon aria-hidden="true" className="size-1/2" strokeWidth={1.8} />
     </span>

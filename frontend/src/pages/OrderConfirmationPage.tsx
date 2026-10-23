@@ -69,7 +69,7 @@ function CopyButton({
       className={`grid size-10 shrink-0 place-items-center rounded-md border transition active:scale-95 ${
         isCopied
           ? 'border-emerald-300 bg-emerald-50 text-emerald-700'
-          : 'border-zinc-200 bg-white text-zinc-500 hover:border-coral-300 hover:text-coral-600 dark:border-zinc-700 dark:bg-zinc-950 dark:text-zinc-300'
+          : 'border-zinc-200 bg-white text-zinc-500 hover:border-brand-magenta-300 hover:text-brand-magenta-600'
       }`}
     >
       {isCopied ? <Check size={18} strokeWidth={2.4} /> : <Copy size={17} strokeWidth={1.9} />}
@@ -92,13 +92,13 @@ function PaymentPanel({ reference }: { reference: string }) {
 
   if (payment.isPending) {
     return (
-      <div className="mt-10 grid animate-pulse overflow-hidden border border-zinc-200 bg-white lg:grid-cols-[minmax(20rem,0.9fr)_1.1fr] dark:border-zinc-800 dark:bg-zinc-900">
-        <div className="min-h-[25rem] bg-zinc-200 dark:bg-zinc-800" />
+      <div className="mt-10 grid animate-pulse overflow-hidden border border-zinc-200 bg-white lg:grid-cols-[minmax(20rem,0.9fr)_1.1fr]">
+        <div className="min-h-[25rem] bg-zinc-200" />
         <div className="space-y-5 p-6 sm:p-9">
-          <div className="h-8 w-3/5 bg-zinc-200 dark:bg-zinc-800" />
-          <div className="h-20 bg-zinc-100 dark:bg-zinc-800/70" />
-          <div className="h-16 bg-zinc-100 dark:bg-zinc-800/70" />
-          <div className="h-16 bg-zinc-100 dark:bg-zinc-800/70" />
+          <div className="h-8 w-3/5 bg-zinc-200" />
+          <div className="h-20 bg-zinc-100" />
+          <div className="h-16 bg-zinc-100" />
+          <div className="h-16 bg-zinc-100" />
         </div>
       </div>
     );
@@ -106,12 +106,12 @@ function PaymentPanel({ reference }: { reference: string }) {
 
   if (payment.isError || !payment.data) {
     return (
-      <div className="mt-10 border border-red-200 bg-red-50 p-6 dark:border-red-900 dark:bg-red-950/30">
+      <div className="mt-10 border border-red-200 bg-red-50 p-6">
         <p className="font-bold">Chưa tạo được mã QR thanh toán.</p>
         <button
           type="button"
           onClick={() => payment.refetch()}
-          className="mt-4 inline-flex items-center gap-2 font-bold text-coral-600 dark:text-coral-400"
+          className="mt-4 inline-flex items-center gap-2 font-bold text-brand-magenta-600"
         >
           <RefreshCw size={17} /> Thử lại
         </button>
@@ -121,23 +121,23 @@ function PaymentPanel({ reference }: { reference: string }) {
 
   const data = payment.data;
   return (
-    <div className="mt-10 overflow-hidden border border-zinc-200 bg-white shadow-[0_30px_75px_-52px_rgba(24,24,27,0.65)] dark:border-zinc-800 dark:bg-zinc-900">
-      <div className="flex flex-wrap items-center justify-between gap-x-5 gap-y-3 border-b border-zinc-200 bg-zinc-50 px-5 py-4 dark:border-zinc-800 dark:bg-zinc-950/50 sm:px-8">
+    <div className="mt-10 overflow-hidden border border-zinc-200 bg-white shadow-[0_30px_75px_-52px_rgba(24,24,27,0.65)]">
+      <div className="flex flex-wrap items-center justify-between gap-x-5 gap-y-3 border-b border-zinc-200 bg-zinc-50 px-5 py-4 sm:px-8">
         <div className="flex items-center gap-3">
-          <span className="grid size-9 place-items-center rounded-md bg-coral-600 text-white">
+          <span className="grid size-9 place-items-center rounded-md bg-brand-magenta-600 text-white">
             <CreditCard size={18} strokeWidth={1.9} />
           </span>
           <div>
-            <p className="font-bold text-zinc-950 dark:text-zinc-50">Quét mã QR để thanh toán</p>
-            <p className="mt-0.5 text-sm text-zinc-500 dark:text-zinc-400">
+            <p className="font-bold text-zinc-950">Quét mã QR để thanh toán</p>
+            <p className="mt-0.5 text-sm text-zinc-500">
               Đơn được giữ cho bạn trong thời gian còn lại
             </p>
           </div>
         </div>
-        <div className="flex items-center gap-3 border-l-2 border-coral-500 pl-3 text-zinc-950 dark:text-zinc-50">
-          <Clock3 className="text-coral-600 dark:text-coral-400" size={19} strokeWidth={2} />
+        <div className="flex items-center gap-3 border-l-2 border-brand-magenta-500 pl-3 text-zinc-950">
+          <Clock3 className="text-brand-magenta-600" size={19} strokeWidth={2} />
           <div>
-            <p className="text-xs font-semibold text-zinc-500 dark:text-zinc-400">
+            <p className="text-xs font-semibold text-zinc-500">
               Thời gian giữ vé
             </p>
             <p className="font-mono text-xl font-black leading-none tabular-nums">{countdown}</p>
@@ -167,33 +167,33 @@ function PaymentPanel({ reference }: { reference: string }) {
         <section className="min-w-0 px-5 py-7 sm:px-8 sm:py-9">
           <div className="flex items-start justify-between gap-4">
             <div>
-              <p className="text-sm font-semibold text-zinc-500 dark:text-zinc-400">
+              <p className="text-sm font-semibold text-zinc-500">
                 Số tiền cần chuyển
               </p>
-              <p className="mt-1 text-3xl font-black tabular-nums text-zinc-950 dark:text-zinc-50 sm:text-4xl">
+              <p className="mt-1 text-3xl font-black tabular-nums text-zinc-950 sm:text-4xl">
                 {currency.format(data.amountVnd)}
               </p>
             </div>
-            <span className="grid size-10 shrink-0 place-items-center rounded-md bg-emerald-50 text-emerald-700 dark:bg-emerald-950/50 dark:text-emerald-400">
+            <span className="grid size-10 shrink-0 place-items-center rounded-md bg-emerald-50 text-emerald-700">
               <ShieldCheck size={21} strokeWidth={1.9} />
               <span className="sr-only">Đối soát tự động</span>
             </span>
           </div>
 
-          <dl className="mt-8 border-t border-zinc-200 dark:border-zinc-800">
-            <div className="grid gap-1 border-b border-zinc-200 py-4 dark:border-zinc-800 sm:grid-cols-[9.5rem_1fr] sm:items-center">
-              <dt className="text-sm text-zinc-500 dark:text-zinc-400">Ngân hàng</dt>
+          <dl className="mt-8 border-t border-zinc-200">
+            <div className="grid gap-1 border-b border-zinc-200 py-4 sm:grid-cols-[9.5rem_1fr] sm:items-center">
+              <dt className="text-sm text-zinc-500">Ngân hàng</dt>
               <dd className="flex items-center gap-2 font-bold">
-                <Landmark size={17} className="text-coral-600 dark:text-coral-400" />
+                <Landmark size={17} className="text-brand-magenta-600" />
                 {data.bankCode}
               </dd>
             </div>
-            <div className="grid gap-1 border-b border-zinc-200 py-4 dark:border-zinc-800 sm:grid-cols-[9.5rem_1fr] sm:items-center">
-              <dt className="text-sm text-zinc-500 dark:text-zinc-400">Chủ tài khoản</dt>
+            <div className="grid gap-1 border-b border-zinc-200 py-4 sm:grid-cols-[9.5rem_1fr] sm:items-center">
+              <dt className="text-sm text-zinc-500">Chủ tài khoản</dt>
               <dd className="font-bold">{data.accountName}</dd>
             </div>
-            <div className="grid gap-2 border-b border-zinc-200 py-4 dark:border-zinc-800 sm:grid-cols-[9.5rem_1fr] sm:items-center">
-              <dt className="text-sm text-zinc-500 dark:text-zinc-400">Số tài khoản</dt>
+            <div className="grid gap-2 border-b border-zinc-200 py-4 sm:grid-cols-[9.5rem_1fr] sm:items-center">
+              <dt className="text-sm text-zinc-500">Số tài khoản</dt>
               <dd className="flex min-w-0 items-center justify-between gap-3 font-mono text-lg font-black tabular-nums">
                 <span className="break-all">{data.accountNumber}</span>
                 <CopyButton
@@ -203,9 +203,9 @@ function PaymentPanel({ reference }: { reference: string }) {
                 />
               </dd>
             </div>
-            <div className="grid gap-2 border-b border-zinc-200 py-4 dark:border-zinc-800 sm:grid-cols-[9.5rem_1fr] sm:items-center">
-              <dt className="text-sm text-zinc-500 dark:text-zinc-400">Nội dung chuyển khoản</dt>
-              <dd className="flex min-w-0 items-center justify-between gap-3 font-mono text-base font-black text-coral-600 dark:text-coral-400">
+            <div className="grid gap-2 border-b border-zinc-200 py-4 sm:grid-cols-[9.5rem_1fr] sm:items-center">
+              <dt className="text-sm text-zinc-500">Nội dung chuyển khoản</dt>
+              <dd className="flex min-w-0 items-center justify-between gap-3 font-mono text-base font-black text-brand-magenta-600">
                 <span className="break-all">{data.transferContent}</span>
                 <CopyButton
                   value={data.transferContent}
@@ -217,7 +217,7 @@ function PaymentPanel({ reference }: { reference: string }) {
           </dl>
 
           <p
-            className="mt-5 min-h-5 text-sm font-semibold text-emerald-700 dark:text-emerald-400"
+            className="mt-5 min-h-5 text-sm font-semibold text-emerald-700"
             aria-live="polite"
           >
             {copiedLabel ? `Đã sao chép ${copiedLabel.toLocaleLowerCase('vi-VN')}.` : ''}
@@ -242,10 +242,10 @@ export function OrderConfirmationPage() {
     return (
       <section className="mx-auto min-h-[60dvh] max-w-4xl px-4 py-16">
         <h1 className="text-3xl font-black">Không thể mở đơn hàng</h1>
-        <p className="mt-4 text-zinc-600 dark:text-zinc-300">
+        <p className="mt-4 text-zinc-600">
           Hãy đăng nhập đúng tài khoản đã tạo đơn.
         </p>
-        <Link to="/" className="mt-7 inline-flex font-bold text-coral-600">
+        <Link to="/" className="mt-7 inline-flex font-bold text-brand-magenta-600">
           Về trang sự kiện
         </Link>
       </section>
@@ -257,19 +257,19 @@ export function OrderConfirmationPage() {
   const closed = ['expired', 'cancelled'].includes(order.status);
 
   return (
-    <section className="bg-zinc-100/70 py-8 dark:bg-zinc-950 sm:py-12">
+    <section className="bg-zinc-100/70 py-8 sm:py-12">
       <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
         <Link
           to="/"
-          className="inline-flex items-center gap-2 text-sm font-semibold text-zinc-600 dark:text-zinc-300"
+          className="inline-flex items-center gap-2 text-sm font-semibold text-zinc-600"
         >
           <ArrowLeft size={17} /> Trang sự kiện
         </Link>
-        <div className="mt-8 border-l-4 border-coral-600 pl-5 sm:pl-6">
-          <p className="flex items-center gap-2 text-sm font-bold text-coral-600 dark:text-coral-400">
+        <div className="mt-8 border-l-4 border-brand-magenta-600 pl-5 sm:pl-6">
+          <p className="flex items-center gap-2 text-sm font-bold text-brand-magenta-600">
             <ReceiptText size={18} /> MÃ ĐƠN {order.reference}
           </p>
-          <h1 className="mt-3 text-3xl font-black leading-tight text-zinc-950 dark:text-zinc-50 sm:text-4xl">
+          <h1 className="mt-3 text-3xl font-black leading-tight text-zinc-950 sm:text-4xl">
             {paid
               ? 'Vé đã được phát hành'
               : review
@@ -278,7 +278,7 @@ export function OrderConfirmationPage() {
                   ? 'Đơn hàng đã hết hiệu lực'
                   : 'Thanh toán để nhận vé'}
           </h1>
-          <p className="mt-3 max-w-2xl leading-relaxed text-zinc-600 dark:text-zinc-300">
+          <p className="mt-3 max-w-2xl leading-relaxed text-zinc-600">
             {paid
               ? 'Thanh toán đã được xác nhận. Vé và mã QR soát vé đã có trong tài khoản của bạn.'
               : review
@@ -290,11 +290,11 @@ export function OrderConfirmationPage() {
         </div>
         {order.status === 'pending_payment' ? <PaymentPanel reference={reference} /> : null}
         {paid ? (
-          <div className="mt-10 border border-emerald-200 bg-emerald-50 p-6 dark:border-emerald-900 dark:bg-emerald-950/30">
+          <div className="mt-10 border border-emerald-200 bg-emerald-50 p-6">
             <CircleCheck className="text-emerald-600" size={26} />
             <Link
               to="/tai-khoan"
-              className="mt-5 inline-flex h-11 items-center gap-2 rounded-md bg-coral-600 px-5 text-sm font-bold text-white"
+              className="mt-5 inline-flex h-11 items-center gap-2 rounded-md bg-brand-magenta-600 px-5 text-sm font-bold text-white"
             >
               <Ticket size={18} /> Mở vé và QR
             </Link>

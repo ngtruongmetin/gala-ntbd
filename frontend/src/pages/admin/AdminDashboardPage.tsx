@@ -47,18 +47,18 @@ export function AdminDashboardPage() {
   return (
     <section>
       <h1 className="text-2xl font-black sm:text-3xl">Tổng quan vận hành</h1>
-      <p className="mt-2 text-sm text-zinc-500 dark:text-zinc-400">
+      <p className="mt-2 text-sm text-zinc-500">
         Doanh thu, số vé còn lại và tình trạng soát vé của sự kiện.
       </p>
 
-      <div className="mt-7 grid overflow-hidden rounded-md border border-zinc-200 min-[360px]:grid-cols-2 xl:grid-cols-4 dark:border-zinc-800">
+      <div className="mt-7 grid overflow-hidden rounded-md border border-zinc-200 min-[360px]:grid-cols-2 xl:grid-cols-4">
         {metrics.map(([label, value, Icon]) => (
           <div
             key={label}
-            className="min-w-0 border-b border-zinc-200 bg-white p-4 min-[360px]:border-r sm:p-5 xl:border-b-0 dark:border-zinc-800 dark:bg-zinc-900"
+            className="min-w-0 border-b border-zinc-200 bg-white p-4 min-[360px]:border-r sm:p-5 xl:border-b-0"
           >
-            <Icon className="text-coral-600 dark:text-coral-400" size={20} strokeWidth={1.8} />
-            <p className="mt-4 text-sm text-zinc-500 dark:text-zinc-400">{label}</p>
+            <Icon className="text-brand-magenta-600" size={20} strokeWidth={1.8} />
+            <p className="mt-4 text-sm text-zinc-500">{label}</p>
             <p className="mt-1 break-words text-xl font-black tabular-nums sm:text-2xl">{value}</p>
           </div>
         ))}
@@ -67,7 +67,7 @@ export function AdminDashboardPage() {
       <div className="mt-8 grid gap-8 xl:grid-cols-[1.4fr_0.6fr]">
         <section className="min-w-0">
           <h2 className="text-lg font-black">Doanh thu 14 ngày</h2>
-          <div className="mt-4 h-64 rounded-md border border-zinc-200 bg-white p-2 sm:h-72 sm:p-4 dark:border-zinc-800 dark:bg-zinc-900">
+          <div className="mt-4 h-64 rounded-md border border-zinc-200 bg-white p-2 sm:h-72 sm:p-4">
             {hasTrendData ? (
               <ResponsiveContainer width="100%" height="100%">
                 <AreaChart data={trend}>
@@ -97,12 +97,12 @@ export function AdminDashboardPage() {
             <h2 className="text-lg font-black">Cần đối soát</h2>
             <Link
               to="/admin/don-hang?status=payment_review"
-              className="text-sm font-bold text-coral-600 dark:text-coral-400"
+              className="text-sm font-bold text-brand-magenta-600"
             >
               Xem tất cả
             </Link>
           </div>
-          <div className="mt-4 overflow-hidden rounded-md border border-zinc-200 bg-white dark:border-zinc-800 dark:bg-zinc-900">
+          <div className="mt-4 overflow-hidden rounded-md border border-zinc-200 bg-white">
             {dashboard.reviewOrders.length === 0 ? (
               <p className="p-5 text-sm text-zinc-500">Không có đơn cần xử lý.</p>
             ) : (
@@ -110,7 +110,7 @@ export function AdminDashboardPage() {
                 <Link
                   key={order.reference}
                   to={`/admin/don-hang/${order.reference}`}
-                  className="block border-b border-zinc-200 p-4 last:border-b-0 hover:bg-zinc-50 dark:border-zinc-800 dark:hover:bg-zinc-800"
+                  className="block border-b border-zinc-200 p-4 last:border-b-0 hover:bg-zinc-50"
                 >
                   <div className="flex items-center justify-between gap-3">
                     <strong>{order.reference}</strong>
@@ -127,13 +127,13 @@ export function AdminDashboardPage() {
       <div className="mt-8 grid gap-8 lg:grid-cols-2">
         <section>
           <h2 className="text-lg font-black">Đối soát doanh thu</h2>
-          <dl className="mt-4 grid gap-px overflow-hidden rounded-md border border-zinc-200 bg-zinc-200 min-[420px]:grid-cols-3 dark:border-zinc-800 dark:bg-zinc-800">
+          <dl className="mt-4 grid gap-px overflow-hidden rounded-md border border-zinc-200 bg-zinc-200 min-[420px]:grid-cols-3">
             {[
               ['Tiền vào', currency.format(dashboard.summary.grossRevenueVnd)],
               ['Đã hoàn', currency.format(dashboard.summary.refundedRevenueVnd)],
               ['Doanh thu ròng', currency.format(dashboard.summary.netRevenueVnd)],
             ].map(([label, value]) => (
-              <div key={label} className="bg-white p-4 dark:bg-zinc-900">
+              <div key={label} className="bg-white p-4">
                 <dt className="text-sm text-zinc-500">{label}</dt>
                 <dd className="mt-2 font-black tabular-nums">{value}</dd>
               </div>
@@ -142,14 +142,14 @@ export function AdminDashboardPage() {
         </section>
         <section>
           <h2 className="text-lg font-black">Lượt soát vé gần đây</h2>
-          <div className="mt-4 overflow-hidden rounded-md border border-zinc-200 bg-white dark:border-zinc-800 dark:bg-zinc-900">
+          <div className="mt-4 overflow-hidden rounded-md border border-zinc-200 bg-white">
             {dashboard.recentCheckIns.length === 0 ? (
               <p className="p-5 text-sm text-zinc-500">Chưa có lượt quét vé.</p>
             ) : (
               dashboard.recentCheckIns.map((attempt, index) => (
                 <div
                   key={`${attempt.occurredAt}-${index}`}
-                  className="flex items-center justify-between gap-3 border-b border-zinc-200 p-4 last:border-b-0 dark:border-zinc-800"
+                  className="flex items-center justify-between gap-3 border-b border-zinc-200 p-4 last:border-b-0"
                 >
                   <div className="min-w-0">
                     <strong className="block truncate">

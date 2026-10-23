@@ -33,10 +33,10 @@ export function StatusBadge({ status }: { status: string }) {
   ];
   const positive = ['paid', 'valid', 'success', 'matched'];
   const className = alert.includes(status)
-    ? 'border-coral-500/30 bg-coral-500/10 text-coral-700 dark:text-coral-400'
+    ? 'border-red-500/30 bg-red-500/10 text-red-700'
     : positive.includes(status)
-      ? 'border-emerald-500/30 bg-emerald-500/10 text-emerald-700 dark:text-emerald-400'
-      : 'border-zinc-300 bg-zinc-100 text-zinc-700 dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-300';
+      ? 'border-emerald-500/30 bg-emerald-500/10 text-emerald-700'
+      : 'border-zinc-300 bg-zinc-100 text-zinc-700';
   return (
     <span className={`inline-flex rounded-md border px-2 py-1 text-xs font-bold ${className}`}>
       {labels[status] ?? status}

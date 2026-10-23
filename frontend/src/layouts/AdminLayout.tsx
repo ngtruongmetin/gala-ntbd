@@ -36,11 +36,11 @@ export function AdminLayout() {
   if (!authQuery.data?.authenticated) {
     return (
       <section className="mx-auto min-h-[60dvh] max-w-5xl px-4 py-16">
-        <ShieldCheck className="text-coral-600" size={30} strokeWidth={1.8} />
+        <ShieldCheck className="text-brand-navy-600" size={30} strokeWidth={1.8} />
         <h1 className="mt-5 text-3xl font-black">Đăng nhập quản trị</h1>
         <a
           href={getGoogleLoginUrl('/admin')}
-          className="mt-7 inline-flex h-12 items-center rounded-md bg-coral-600 px-5 font-bold text-white"
+          className="mt-7 inline-flex h-12 items-center rounded-md bg-brand-navy-600 px-5 font-bold text-white"
         >
           Đăng nhập Google
         </a>
@@ -51,7 +51,7 @@ export function AdminLayout() {
     return (
       <section className="mx-auto min-h-[60dvh] max-w-5xl px-4 py-16">
         <h1 className="text-3xl font-black">Không có quyền truy cập</h1>
-        <p className="mt-4 text-zinc-600 dark:text-zinc-300">
+        <p className="mt-4 text-zinc-600">
           Tài khoản Google này chưa có quyền quản trị.
         </p>
       </section>
@@ -60,7 +60,7 @@ export function AdminLayout() {
 
   return (
     <div className="mx-auto grid max-w-[1500px] lg:grid-cols-[220px_minmax(0,1fr)]">
-      <aside className="hidden border-r border-zinc-200 bg-white px-5 py-7 lg:block lg:min-h-[calc(100dvh-5rem)] dark:border-zinc-800 dark:bg-zinc-950">
+      <aside className="hidden border-r border-zinc-800 bg-zinc-950 px-5 py-7 text-white lg:block lg:min-h-[calc(100dvh-5rem)]">
         <p className="text-sm font-black">Quản trị Gala</p>
         <nav className="mt-6 grid gap-2" aria-label="Điều hướng quản trị">
           {navItems
@@ -75,8 +75,8 @@ export function AdminLayout() {
                   className={({ isActive }) =>
                     `inline-flex h-10 shrink-0 items-center gap-2 rounded-md px-3 text-sm font-bold transition ${
                       isActive
-                        ? 'bg-coral-600 text-white'
-                        : 'text-zinc-600 hover:bg-zinc-100 dark:text-zinc-300 dark:hover:bg-zinc-900'
+                        ? 'bg-brand-navy-600 text-white'
+                        : 'text-white/70 hover:bg-brand-navy-600 hover:text-white'
                     }`
                   }
                 >
@@ -87,12 +87,12 @@ export function AdminLayout() {
             })}
         </nav>
       </aside>
-      <div className="pb-admin-nav min-w-0 bg-zinc-50 px-4 pt-6 sm:px-6 sm:pt-8 lg:px-8 dark:bg-zinc-950">
+      <div className="pb-admin-nav min-w-0 bg-zinc-50 px-4 pt-6 sm:px-6 sm:pt-8 lg:px-8">
         <Outlet />
       </div>
       <nav
         aria-label="Điều hướng quản trị trên điện thoại"
-        className="safe-bottom fixed inset-x-0 bottom-0 z-40 grid grid-cols-5 border-t border-zinc-200 bg-white/95 px-1 pt-1 backdrop-blur lg:hidden dark:border-zinc-800 dark:bg-zinc-950/95"
+        className="safe-bottom fixed inset-x-0 bottom-0 z-40 grid grid-cols-5 border-t border-zinc-800 bg-zinc-950/95 px-1 pt-1 text-white backdrop-blur lg:hidden"
       >
         {navItems.slice(0, 4).map((item) => {
           const Icon = item.icon;
@@ -104,8 +104,8 @@ export function AdminLayout() {
               className={({ isActive }) =>
                 `flex min-h-14 flex-col items-center justify-center gap-1 rounded-md px-1 text-[11px] font-bold transition ${
                   isActive
-                    ? 'text-coral-600 dark:text-coral-400'
-                    : 'text-zinc-500 dark:text-zinc-400'
+                    ? 'text-brand-navy-300'
+                    : 'text-white/65 hover:text-brand-navy-300'
                 }`
               }
             >
@@ -122,8 +122,8 @@ export function AdminLayout() {
             moreOpen ||
             location.pathname.includes('/nhan-su') ||
             location.pathname.includes('/cau-hinh')
-              ? 'text-coral-600 dark:text-coral-400'
-              : 'text-zinc-500 dark:text-zinc-400'
+              ? 'text-brand-navy-300'
+              : 'text-white/65 hover:text-brand-navy-300'
           }`}
         >
           <MoreHorizontal size={21} />
@@ -143,7 +143,7 @@ export function AdminLayout() {
             className="absolute inset-0 bg-zinc-950/45"
             onClick={() => setMoreOpen(false)}
           />
-          <div className="safe-bottom absolute inset-x-0 bottom-0 rounded-t-lg bg-white p-4 shadow-2xl dark:bg-zinc-900">
+          <div className="safe-bottom absolute inset-x-0 bottom-0 rounded-t-lg bg-white p-4 shadow-2xl">
             <div className="mb-3 flex items-center justify-between">
               <strong>Thêm</strong>
               <button
@@ -179,7 +179,7 @@ export function AdminLayout() {
               <Link
                 to="/"
                 onClick={() => setMoreOpen(false)}
-                className="flex min-h-12 items-center gap-3 rounded-md px-3 font-bold hover:bg-zinc-100 dark:hover:bg-zinc-800"
+                className="flex min-h-12 items-center gap-3 rounded-md px-3 font-bold hover:bg-zinc-100"
               >
                 <Ticket size={20} /> Trang bán vé
               </Link>
@@ -207,7 +207,7 @@ function MobileMoreLink({
       to={to}
       onClick={close}
       className={({ isActive }) =>
-        `flex min-h-12 items-center gap-3 rounded-md px-3 font-bold ${isActive ? 'bg-coral-600 text-white' : 'hover:bg-zinc-100 dark:hover:bg-zinc-800'}`
+        `flex min-h-12 items-center gap-3 rounded-md px-3 font-bold ${isActive ? 'bg-brand-navy-600 text-white' : 'hover:bg-brand-navy-100 hover:text-brand-navy-600'}`
       }
     >
       <Icon size={20} /> {label}

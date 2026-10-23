@@ -169,20 +169,20 @@ function EventSettingsForm({
   });
 
   const fieldClass =
-    'h-11 min-w-0 w-full rounded-md border border-zinc-300 bg-white px-3 font-normal outline-none focus:border-coral-600 focus:ring-2 focus:ring-coral-600/20 dark:border-zinc-700 dark:bg-zinc-950';
+    'h-11 min-w-0 w-full rounded-md border border-zinc-300 bg-white px-3 font-normal outline-none focus:border-brand-cyan-600 focus:ring-2 focus:ring-brand-cyan-600/20';
 
   return (
     <form onSubmit={onSubmit} className="mt-10 min-w-0" noValidate>
-      <div className="flex flex-col gap-4 border-b border-zinc-200 pb-6 sm:flex-row sm:items-center sm:justify-between dark:border-zinc-800">
+      <div className="flex flex-col gap-4 border-b border-zinc-200 pb-6 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <h2 className="text-xl font-black">Cấu hình mở bán</h2>
-          <p className="mt-1 text-sm text-zinc-500 dark:text-zinc-400">
+          <p className="mt-1 text-sm text-zinc-500">
             Mọi thay đổi được hệ thống áp dụng cho luồng đặt vé.
           </p>
         </div>
         <label className="inline-flex w-fit cursor-pointer items-center gap-3 font-bold">
           <input type="checkbox" className="peer sr-only" {...register('salesOpen')} />
-          <span className="relative h-7 w-12 rounded-full bg-zinc-300 transition after:absolute after:left-1 after:top-1 after:size-5 after:rounded-full after:bg-white after:transition peer-checked:bg-coral-600 peer-checked:after:translate-x-5 peer-focus-visible:outline peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-coral-500 dark:bg-zinc-700" />
+          <span className="relative h-7 w-12 rounded-full bg-zinc-300 transition after:absolute after:left-1 after:top-1 after:size-5 after:rounded-full after:bg-white after:transition peer-checked:bg-brand-magenta-600 peer-checked:after:translate-x-5 peer-focus-visible:outline peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-brand-cyan-500" />
           {salesOpen ? 'Đang mở bán' : 'Đang tạm dừng'}
         </label>
       </div>
@@ -194,26 +194,26 @@ function EventSettingsForm({
             Tên sự kiện
             <input className={fieldClass} {...register('eventName')} />
             {errors.eventName ? (
-              <span className="text-coral-600">{errors.eventName.message}</span>
+              <span className="text-red-600">{errors.eventName.message}</span>
             ) : null}
           </label>
           <label className="grid gap-2 text-sm font-semibold">
             Mục đích
             <input className={fieldClass} {...register('eventSubtitle')} />
             {errors.eventSubtitle ? (
-              <span className="text-coral-600">{errors.eventSubtitle.message}</span>
+              <span className="text-red-600">{errors.eventSubtitle.message}</span>
             ) : null}
           </label>
           <label className="grid gap-2 text-sm font-semibold">
             Địa điểm
             <input className={fieldClass} {...register('venue')} />
-            {errors.venue ? <span className="text-coral-600">{errors.venue.message}</span> : null}
+            {errors.venue ? <span className="text-red-600">{errors.venue.message}</span> : null}
           </label>
           <label className="grid gap-2 text-sm font-semibold">
             Thời gian tổ chức
             <input type="datetime-local" className={fieldClass} {...register('eventStartsAt')} />
             {errors.eventStartsAt ? (
-              <span className="text-coral-600">{errors.eventStartsAt.message}</span>
+              <span className="text-red-600">{errors.eventStartsAt.message}</span>
             ) : null}
           </label>
         </fieldset>
@@ -253,7 +253,7 @@ function EventSettingsForm({
                 {...register('maxTicketsPerOrder', { valueAsNumber: true })}
               />
               {errors.maxTicketsPerOrder ? (
-                <span className="text-coral-600">{errors.maxTicketsPerOrder.message}</span>
+                <span className="text-red-600">{errors.maxTicketsPerOrder.message}</span>
               ) : null}
             </label>
           </div>
@@ -265,7 +265,7 @@ function EventSettingsForm({
             Kết thúc bán
             <input type="datetime-local" className={fieldClass} {...register('salesEndAt')} />
             {errors.salesEndAt ? (
-              <span className="text-coral-600">{errors.salesEndAt.message}</span>
+              <span className="text-red-600">{errors.salesEndAt.message}</span>
             ) : null}
           </label>
           <label className="grid gap-2 text-sm font-semibold">
@@ -282,20 +282,20 @@ function EventSettingsForm({
       {mutation.isError ? (
         <p
           role="alert"
-          className="mb-5 rounded-md bg-coral-500/10 p-4 text-sm font-semibold text-coral-700 dark:text-coral-400"
+          className="mb-5 rounded-md bg-red-50 p-4 text-sm font-semibold text-red-700"
         >
           {getApiErrorMessage(mutation.error, 'Không thể lưu cấu hình.')}
         </p>
       ) : null}
       {mutation.isSuccess ? (
-        <p className="mb-5 text-sm font-bold text-emerald-700 dark:text-emerald-400">
+        <p className="mb-5 text-sm font-bold text-emerald-700">
           Đã lưu cấu hình sự kiện.
         </p>
       ) : null}
       <button
         type="submit"
         disabled={mutation.isPending}
-        className="inline-flex h-12 w-full items-center justify-center gap-2 rounded-md bg-coral-600 px-5 text-center font-bold text-white transition hover:bg-coral-500 active:translate-y-px disabled:cursor-wait disabled:opacity-60 sm:w-auto"
+        className="inline-flex h-12 w-full items-center justify-center gap-2 rounded-md bg-brand-magenta-600 px-5 text-center font-bold text-white transition hover:bg-brand-magenta-500 active:translate-y-px disabled:cursor-wait disabled:opacity-60 sm:w-auto"
       >
         <Save aria-hidden="true" size={18} strokeWidth={1.8} />
         {mutation.isPending ? 'Đang lưu...' : 'Lưu cấu hình'}
@@ -339,12 +339,12 @@ function PartnerManager({ partners, csrfToken }: { partners: EventPartner[]; csr
   };
 
   return (
-    <section className="mt-12 border-t border-zinc-200 pt-9 dark:border-zinc-800">
+    <section className="mt-12 border-t border-zinc-200 pt-9">
       <div className="flex items-start gap-3">
-        <Handshake className="mt-1 shrink-0 text-coral-600" size={24} />
+        <Handshake className="mt-1 shrink-0 text-brand-magenta-600" size={24} />
         <div>
           <h2 className="text-xl font-black">Đơn vị đồng hành</h2>
-          <p className="mt-1 max-w-2xl text-sm text-zinc-500 dark:text-zinc-400">
+          <p className="mt-1 max-w-2xl text-sm text-zinc-500">
             Quản lý nhà tài trợ và đối tác hiển thị trên trang chủ. Trường và Đoàn trường là nhận
             diện cố định, không nằm trong danh sách này.
           </p>
@@ -352,7 +352,7 @@ function PartnerManager({ partners, csrfToken }: { partners: EventPartner[]; csr
       </div>
       <form
         onSubmit={submit}
-        className="mt-6 grid min-w-0 gap-3 rounded-md bg-white p-4 md:grid-cols-2 dark:bg-zinc-900"
+        className="mt-6 grid min-w-0 gap-3 rounded-md bg-white p-4 md:grid-cols-2"
       >
         <label className="grid min-w-0 gap-2 text-sm font-bold">
           Tên đơn vị
@@ -361,7 +361,7 @@ function PartnerManager({ partners, csrfToken }: { partners: EventPartner[]; csr
             name="name"
             defaultValue={editing?.name ?? ''}
             key={`name-${editing?.id ?? 'new'}`}
-            className="h-11 rounded-md border border-zinc-300 bg-transparent px-3 dark:border-zinc-700"
+            className="h-11 rounded-md border border-zinc-300 bg-transparent px-3"
           />
         </label>
         <label className="grid min-w-0 gap-2 text-sm font-bold">
@@ -377,7 +377,7 @@ function PartnerManager({ partners, csrfToken }: { partners: EventPartner[]; csr
               const file = inputEvent.currentTarget.files?.[0];
               setPreviewUrl(file ? URL.createObjectURL(file) : null);
             }}
-            className="min-h-11 w-full min-w-0 max-w-full rounded-md border border-zinc-300 bg-transparent text-sm file:mr-3 file:min-h-11 file:border-0 file:bg-zinc-100 file:px-3 file:font-bold dark:border-zinc-700 dark:file:bg-zinc-800"
+            className="min-h-11 w-full min-w-0 max-w-full rounded-md border border-zinc-300 bg-transparent text-sm file:mr-3 file:min-h-11 file:border-0 file:bg-zinc-100 file:px-3 file:font-bold"
           />
           <span className="font-normal text-zinc-500">
             PNG, JPEG hoặc WebP, tối đa 2 MB.
@@ -399,7 +399,7 @@ function PartnerManager({ partners, csrfToken }: { partners: EventPartner[]; csr
             placeholder="https://..."
             defaultValue={editing?.websiteUrl ?? ''}
             key={`url-${editing?.id ?? 'new'}`}
-            className="h-11 rounded-md border border-zinc-300 bg-transparent px-3 dark:border-zinc-700"
+            className="h-11 rounded-md border border-zinc-300 bg-transparent px-3"
           />
         </label>
         <div className="grid grid-cols-[1fr_auto] gap-3">
@@ -411,7 +411,7 @@ function PartnerManager({ partners, csrfToken }: { partners: EventPartner[]; csr
               name="sortOrder"
               defaultValue={editing?.sortOrder ?? 0}
               key={`sort-${editing?.id ?? 'new'}`}
-              className="h-11 rounded-md border border-zinc-300 bg-transparent px-3 dark:border-zinc-700"
+              className="h-11 rounded-md border border-zinc-300 bg-transparent px-3"
             />
           </label>
           <label className="flex items-end gap-2 pb-3 text-sm font-bold">
@@ -420,7 +420,7 @@ function PartnerManager({ partners, csrfToken }: { partners: EventPartner[]; csr
               name="active"
               defaultChecked={editing?.active ?? true}
               key={`active-${editing?.id ?? 'new'}`}
-              className="size-5 accent-coral-600"
+              className="size-5 accent-brand-magenta-600"
             />{' '}
             Hiển thị
           </label>
@@ -428,7 +428,7 @@ function PartnerManager({ partners, csrfToken }: { partners: EventPartner[]; csr
         <div className="flex flex-col gap-2 md:col-span-2 sm:flex-row">
           <button
             disabled={mutation.isPending}
-            className="inline-flex min-h-11 items-center justify-center gap-2 rounded-md bg-coral-600 px-4 font-bold text-white disabled:opacity-60"
+            className="inline-flex min-h-11 items-center justify-center gap-2 rounded-md bg-brand-magenta-600 px-4 font-bold text-white disabled:opacity-60"
           >
             {editing ? <Save size={17} /> : <Plus size={17} />}{' '}
             {editing ? 'Lưu thay đổi' : 'Thêm đơn vị'}
@@ -440,7 +440,7 @@ function PartnerManager({ partners, csrfToken }: { partners: EventPartner[]; csr
                 setEditing(null);
                 setPreviewUrl(null);
               }}
-              className="inline-flex min-h-11 items-center justify-center gap-2 rounded-md border border-zinc-300 px-4 font-bold dark:border-zinc-700"
+              className="inline-flex min-h-11 items-center justify-center gap-2 rounded-md border border-zinc-300 px-4 font-bold"
             >
               <X size={17} /> Hủy sửa
             </button>
@@ -448,11 +448,11 @@ function PartnerManager({ partners, csrfToken }: { partners: EventPartner[]; csr
         </div>
       </form>
       {mutation.isError ? (
-        <p role="alert" className="mt-3 text-sm font-bold text-coral-600">
+        <p role="alert" className="mt-3 text-sm font-bold text-red-600">
           {getApiErrorMessage(mutation.error, 'Không thể cập nhật đơn vị đồng hành.')}
         </p>
       ) : null}
-      <div className="mt-4 divide-y divide-zinc-200 border-y border-zinc-200 dark:divide-zinc-800 dark:border-zinc-800">
+      <div className="mt-4 divide-y divide-zinc-200 border-y border-zinc-200">
         {partners.length ? (
           partners.map((partner) => (
             <div key={partner.id} className="flex flex-wrap items-center gap-4 py-4">
@@ -470,7 +470,7 @@ function PartnerManager({ partners, csrfToken }: { partners: EventPartner[]; csr
                   setEditing(partner);
                   setPreviewUrl(null);
                 }}
-                className="grid size-11 place-items-center rounded-md border border-zinc-300 dark:border-zinc-700"
+                className="grid size-11 place-items-center rounded-md border border-zinc-300"
               >
                 <Pencil size={17} />
                 <span className="sr-only">Sửa {partner.name}</span>
@@ -479,7 +479,7 @@ function PartnerManager({ partners, csrfToken }: { partners: EventPartner[]; csr
                 type="button"
                 title="Xóa"
                 onClick={() => mutation.mutate(() => deleteEventPartner(partner.id, csrfToken))}
-                className="grid size-11 place-items-center rounded-md border border-coral-500 text-coral-600"
+                className="grid size-11 place-items-center rounded-md border border-red-500 text-red-600"
               >
                 <Trash2 size={17} />
                 <span className="sr-only">Xóa {partner.name}</span>
@@ -507,11 +507,11 @@ export function AdminPage() {
   if (!authQuery.data?.authenticated) {
     return (
       <section className="mx-auto min-h-[60dvh] max-w-5xl px-4 py-16">
-        <LockKeyhole className="text-coral-600" size={28} strokeWidth={1.8} />
+        <LockKeyhole className="text-brand-magenta-600" size={28} strokeWidth={1.8} />
         <h1 className="mt-5 text-3xl font-black">Đăng nhập quản trị</h1>
         <a
           href={getGoogleLoginUrl('/admin')}
-          className="mt-7 inline-flex h-12 items-center rounded-md bg-coral-600 px-5 font-bold text-white"
+          className="mt-7 inline-flex h-12 items-center rounded-md bg-brand-navy-600 px-5 font-bold text-white"
         >
           Đăng nhập Google
         </a>
@@ -522,7 +522,7 @@ export function AdminPage() {
     return (
       <section className="mx-auto min-h-[60dvh] max-w-5xl px-4 py-16">
         <h1 className="text-3xl font-black">Không có quyền truy cập</h1>
-        <p className="mt-4 text-zinc-600 dark:text-zinc-300">
+        <p className="mt-4 text-zinc-600">
           Tài khoản Google này chưa có quyền quản trị.
         </p>
       </section>
@@ -544,30 +544,30 @@ export function AdminPage() {
   ];
 
   return (
-    <section className="bg-zinc-50 py-10 dark:bg-zinc-950 sm:py-14">
+    <section className="bg-zinc-50 py-10 sm:py-14">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <Link
           to="/"
-          className="inline-flex items-center gap-2 text-sm font-semibold text-zinc-600 dark:text-zinc-300"
+          className="inline-flex items-center gap-2 text-sm font-semibold text-zinc-600"
         >
           <ArrowLeft aria-hidden="true" size={17} strokeWidth={1.8} /> Trang bán vé
         </Link>
         <div className="mt-7 flex items-start gap-4">
-          <ShieldCheck className="mt-1 shrink-0 text-coral-600" size={30} strokeWidth={1.8} />
+          <ShieldCheck className="mt-1 shrink-0 text-brand-magenta-600" size={30} strokeWidth={1.8} />
           <div>
             <h1 className="text-3xl font-black sm:text-4xl">Quản trị Gala</h1>
-            <p className="mt-2 text-zinc-600 dark:text-zinc-300">
+            <p className="mt-2 text-zinc-600">
               Cấu hình bán vé và theo dõi tồn kho.
             </p>
           </div>
         </div>
-        <div className="mt-9 grid overflow-hidden rounded-md border border-zinc-200 min-[360px]:grid-cols-2 lg:grid-cols-4 dark:border-zinc-800">
+        <div className="mt-9 grid overflow-hidden rounded-md border border-zinc-200 min-[360px]:grid-cols-2 lg:grid-cols-4">
           {metrics.map(([label, value]) => (
             <div
               key={label}
-              className="min-w-0 border-b border-zinc-200 bg-white p-4 last:border-b-0 min-[360px]:[&:nth-child(odd)]:border-r sm:p-5 lg:border-b-0 lg:border-r lg:last:border-r-0 dark:border-zinc-800 dark:bg-zinc-900"
+              className="min-w-0 border-b border-zinc-200 bg-white p-4 last:border-b-0 min-[360px]:[&:nth-child(odd)]:border-r sm:p-5 lg:border-b-0 lg:border-r lg:last:border-r-0"
             >
-              <p className="text-sm text-zinc-500 dark:text-zinc-400">{label}</p>
+              <p className="text-sm text-zinc-500">{label}</p>
               <p className="mt-2 break-words text-lg font-black tabular-nums sm:text-xl">{value}</p>
             </div>
           ))}

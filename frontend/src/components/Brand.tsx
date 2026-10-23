@@ -5,7 +5,7 @@ export function Brand() {
   return (
     <Link
       to="/"
-      className="inline-flex min-w-0 items-center gap-2 text-zinc-950 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-coral-500 sm:gap-3 dark:text-zinc-50"
+      className="inline-flex min-w-0 items-center gap-2 text-brand-magenta-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand-cyan-500 sm:gap-3"
       aria-label="Gala Sắc màu tuổi trẻ - Gây quỹ học bổng Cùng bạn đến trường - Trang chủ"
     >
       <OrganizationLogo
@@ -22,7 +22,7 @@ export function Brand() {
       />
       <span className="hidden min-w-0 text-sm font-bold leading-tight sm:block sm:text-base">
         Gala Sắc màu tuổi trẻ
-        <span className="block whitespace-nowrap text-xs font-medium text-zinc-600 dark:text-zinc-400">
+        <span className="block whitespace-nowrap text-xs font-medium text-brand-magenta-300">
           Gây quỹ học bổng Cùng bạn đến trường
         </span>
       </span>

@@ -26,7 +26,7 @@ export function AdminOrdersPage() {
   return (
     <section>
       <h1 className="text-2xl font-black sm:text-3xl">Đơn hàng</h1>
-      <p className="mt-2 text-sm text-zinc-500 dark:text-zinc-400">
+      <p className="mt-2 text-sm text-zinc-500">
         Đối soát thanh toán, hủy đơn và xử lý hoàn tiền.
       </p>
       <form
@@ -46,13 +46,13 @@ export function AdminOrdersPage() {
             name="search"
             defaultValue={search}
             placeholder="Mã đơn, tên, email, điện thoại"
-            className="h-11 w-full rounded-md border border-zinc-300 bg-white pl-10 pr-3 outline-none focus:border-coral-600 dark:border-zinc-700 dark:bg-zinc-900"
+            className="h-11 w-full rounded-md border border-zinc-300 bg-white pl-10 pr-3 outline-none focus:border-brand-cyan-600"
           />
         </label>
         <select
           name="status"
           defaultValue={status}
-          className="h-11 rounded-md border border-zinc-300 bg-white px-3 dark:border-zinc-700 dark:bg-zinc-900"
+          className="h-11 rounded-md border border-zinc-300 bg-white px-3"
         >
           <option value="">Mọi trạng thái</option>
           <option value="pending_payment">Chờ thanh toán</option>
@@ -63,7 +63,7 @@ export function AdminOrdersPage() {
           <option value="expired">Hết hạn</option>
           <option value="cancelled">Đã hủy</option>
         </select>
-        <button className="h-11 w-full rounded-md bg-coral-600 px-5 font-bold text-white transition active:translate-y-px">
+        <button className="h-11 w-full rounded-md bg-brand-magenta-600 px-5 font-bold text-white transition active:translate-y-px">
           Lọc
         </button>
       </form>
@@ -73,11 +73,11 @@ export function AdminOrdersPage() {
           <Link
             key={order.reference}
             to={`/admin/don-hang/${order.reference}`}
-            className="rounded-md border border-zinc-200 bg-white p-4 transition active:scale-[0.99] dark:border-zinc-800 dark:bg-zinc-900"
+            className="rounded-md border border-zinc-200 bg-white p-4 transition active:scale-[0.99]"
           >
             <div className="flex items-start justify-between gap-3">
               <div className="min-w-0">
-                <p className="break-all font-black text-coral-600 dark:text-coral-400">
+                <p className="break-all font-black text-brand-magenta-600">
                   {order.reference}
                 </p>
                 <p className="mt-2 break-words font-semibold">{order.buyerName}</p>
@@ -85,7 +85,7 @@ export function AdminOrdersPage() {
               </div>
               <StatusBadge status={order.status} />
             </div>
-            <div className="mt-4 grid grid-cols-2 gap-3 border-t border-zinc-200 pt-4 text-sm dark:border-zinc-800">
+            <div className="mt-4 grid grid-cols-2 gap-3 border-t border-zinc-200 pt-4 text-sm">
               <span className="flex items-center gap-2 text-zinc-500">
                 <Ticket size={16} /> {order.quantity} vé
               </span>
@@ -100,20 +100,20 @@ export function AdminOrdersPage() {
                 }).format(new Date(order.createdAt))}
               </span>
             </div>
-            <span className="mt-4 flex min-h-11 items-center justify-end gap-2 text-sm font-bold text-coral-600 dark:text-coral-400">
+            <span className="mt-4 flex min-h-11 items-center justify-end gap-2 text-sm font-bold text-brand-magenta-600">
               Mở đơn <ArrowRight size={17} />
             </span>
           </Link>
         ))}
         {!ordersQuery.isPending && result?.data.length === 0 ? (
-          <p className="rounded-md border border-zinc-200 bg-white p-6 text-center text-zinc-500 dark:border-zinc-800 dark:bg-zinc-900">
+          <p className="rounded-md border border-zinc-200 bg-white p-6 text-center text-zinc-500">
             Không có đơn phù hợp.
           </p>
         ) : null}
       </div>
-      <div className="mt-6 hidden overflow-x-auto rounded-md border border-zinc-200 bg-white md:block dark:border-zinc-800 dark:bg-zinc-900">
+      <div className="mt-6 hidden overflow-x-auto rounded-md border border-zinc-200 bg-white md:block">
         <table className="w-full min-w-[820px] text-left text-sm">
-          <thead className="bg-zinc-100 text-zinc-600 dark:bg-zinc-800 dark:text-zinc-300">
+          <thead className="bg-zinc-100 text-zinc-600">
             <tr>
               <th className="px-4 py-3">Mã đơn</th>
               <th className="px-4 py-3">Người mua</th>
@@ -125,10 +125,10 @@ export function AdminOrdersPage() {
           </thead>
           <tbody>
             {result?.data.map((order) => (
-              <tr key={order.reference} className="border-t border-zinc-200 dark:border-zinc-800">
+              <tr key={order.reference} className="border-t border-zinc-200">
                 <td className="px-4 py-4">
                   <Link
-                    className="font-black text-coral-600 dark:text-coral-400"
+                    className="font-black text-brand-magenta-600"
                     to={`/admin/don-hang/${order.reference}`}
                   >
                     {order.reference}
@@ -169,7 +169,7 @@ export function AdminOrdersPage() {
                 return current;
               })
             }
-            className="min-h-11 rounded-md border border-zinc-300 px-3 py-2 disabled:opacity-40 dark:border-zinc-700"
+            className="min-h-11 rounded-md border border-zinc-300 px-3 py-2 disabled:opacity-40"
           >
             Trước
           </button>
@@ -184,7 +184,7 @@ export function AdminOrdersPage() {
                 return current;
               })
             }
-            className="min-h-11 rounded-md border border-zinc-300 px-3 py-2 disabled:opacity-40 dark:border-zinc-700"
+            className="min-h-11 rounded-md border border-zinc-300 px-3 py-2 disabled:opacity-40"
           >
             Sau
           </button>

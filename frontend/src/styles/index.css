@@ -4,7 +4,7 @@
 
 @layer base {
   html {
-    color-scheme: light dark;
+    color-scheme: light;
     scroll-behavior: smooth;
     overflow-x: clip;
   }
@@ -13,7 +13,7 @@
     margin: 0;
     min-width: 320px;
     min-height: 100dvh;
-    background: #fafafa;
+    background: #f7f8fc;
     font-synthesis: none;
     text-rendering: optimizeLegibility;
     overflow-wrap: anywhere;
@@ -24,7 +24,7 @@
   }
 
   :where(button, a, input, select, textarea):focus-visible {
-    outline: 2px solid #f43f5e;
+    outline: 2px solid #007a9a;
     outline-offset: 2px;
   }
 
@@ -51,30 +51,6 @@
   textarea:disabled {
     color: #71717a;
     opacity: 1;
-  }
-
-  @media (prefers-color-scheme: dark) {
-    body {
-      background: #09090b;
-    }
-
-    input,
-    select,
-    textarea {
-      color: #fafafa;
-      color-scheme: dark;
-    }
-
-    select option {
-      background-color: #18181b;
-      color: #fafafa;
-    }
-
-    input:disabled,
-    select:disabled,
-    textarea:disabled {
-      color: #a1a1aa;
-    }
   }
 
   @media (prefers-reduced-motion: reduce) {

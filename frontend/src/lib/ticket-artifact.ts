@@ -1,31 +1,6 @@
 import QRCode from 'qrcode';
 import type { Ticket } from '../types/order';
 
-function wrapText(
-  context: CanvasRenderingContext2D,
-  text: string,
-  x: number,
-  y: number,
-  maxWidth: number,
-  lineHeight: number,
-) {
-  const words = text.split(' ');
-  let line = '';
-  let currentY = y;
-  for (const word of words) {
-    const next = line ? `${line} ${word}` : word;
-    if (line && context.measureText(next).width > maxWidth) {
-      context.fillText(line, x, currentY);
-      line = word;
-      currentY += lineHeight;
-    } else {
-      line = next;
-    }
-  }
-  context.fillText(line, x, currentY);
-  return currentY;
-}
-
 function loadImage(source: string) {
   return new Promise<HTMLImageElement>((resolve, reject) => {
     const image = new Image();
@@ -41,65 +16,60 @@ export function ticketFilename(ticket: Ticket) {
 
 export async function createTicketCanvas(ticket: Ticket) {
   if (!ticket.qrPayload) throw new Error('Ticket QR is unavailable');
+
   const canvas = document.createElement('canvas');
   canvas.width = 1240;
   canvas.height = 1754;
   const context = canvas.getContext('2d');
   if (!context) throw new Error('Canvas is unavailable');
 
-  context.fillStyle = '#ffffff';
-  context.fillRect(0, 0, canvas.width, canvas.height);
-  context.fillStyle = '#e11d48';
-  context.fillRect(0, 0, canvas.width, 32);
-  context.fillStyle = '#18181b';
-  context.font = '700 30px Arial, sans-serif';
-  context.fillText('GALA SẮC MÀU TUỔI TRẺ', 100, 112);
-  context.font = '700 60px Arial, sans-serif';
-  const titleBottom = wrapText(context, ticket.eventName, 100, 220, 1040, 72);
+  const [backgroundImage, qrImage] = await Promise.all([
+    loadImage('/images/mauve.png'),
+    QRCode.toDataURL(ticket.qrPayload, {
+      width: 720,
+      margin: 2,
+      errorCorrectionLevel: 'Q',
+    }).then(loadImage),
+  ]);
 
-  const eventTime = new Intl.DateTimeFormat('vi-VN', {
-    dateStyle: 'full',
-    timeStyle: 'short',
-    timeZone: 'Asia/Ho_Chi_Minh',
-  }).format(new Date(ticket.eventStartsAt));
-  context.fillStyle = '#52525b';
-  context.font = '28px Arial, sans-serif';
-  const venueBottom = wrapText(context, ticket.venue, 100, titleBottom + 76, 1040, 40);
-  context.fillText(eventTime, 100, venueBottom + 52);
+  context.drawImage(backgroundImage, 0, 0, canvas.width, canvas.height);
 
-  const qrData = await QRCode.toDataURL(ticket.qrPayload, {
-    width: 720,
-    margin: 4,
-    errorCorrectionLevel: 'L',
-  });
-  const qrImage = await loadImage(qrData);
-  const qrSize = 680;
+  const qrSize = 420;
+  const qrCardSize = qrSize + 48;
   const qrX = (canvas.width - qrSize) / 2;
-  const qrY = venueBottom + 110;
+  const qrY = 786;
+  const qrCardX = (canvas.width - qrCardSize) / 2;
+  const qrCardY = qrY - 24;
+
+  context.fillStyle = '#ffffff';
+  context.beginPath();
+  context.roundRect(qrCardX, qrCardY, qrCardSize, qrCardSize, 10);
+  context.fill();
   context.drawImage(qrImage, qrX, qrY, qrSize, qrSize);
 
   context.textAlign = 'center';
-  context.fillStyle = '#18181b';
-  context.font = '700 42px Arial, sans-serif';
-  context.fillText(ticket.code, canvas.width / 2, qrY + qrSize + 68);
-  context.fillStyle = '#52525b';
-  context.font = '28px Arial, sans-serif';
+  context.fillStyle = '#ffffff';
+  context.font = '700 40px Arial, sans-serif';
+  context.fillText(ticket.code, canvas.width / 2, 1284);
+  context.font = '26px Arial, sans-serif';
   context.fillText(
-    `Vé ${ticket.sequenceNumber} · Đơn ${ticket.orderReference}`,
+    `V\u00e9 ${ticket.sequenceNumber} \u00b7 \u0110\u01a1n ${ticket.orderReference}`,
     canvas.width / 2,
-    qrY + qrSize + 116,
+    1328,
+  );
+  context.font = '700 28px Arial, sans-serif';
+  context.fillText(
+    `NG\u01af\u1edcI MUA: ${ticket.buyerName.toLocaleUpperCase('vi-VN')}`,
+    canvas.width / 2,
+    1378,
+  );
+  context.font = '24px Arial, sans-serif';
+  context.fillText(
+    'Vui l\u00f2ng xu\u1ea5t tr\u00ecnh m\u00e3 QR n\u00e0y t\u1ea1i c\u1ed5ng \u0111\u1ec3 v\u00e0o \u0111\u00eam Gala.',
+    canvas.width / 2,
+    1424,
   );
 
-  context.textAlign = 'left';
-  context.fillStyle = '#71717a';
-  context.font = '700 22px Arial, sans-serif';
-  context.fillText('NGƯỜI MUA', 100, qrY + qrSize + 216);
-  context.fillStyle = '#18181b';
-  context.font = '700 34px Arial, sans-serif';
-  context.fillText(ticket.buyerName, 100, qrY + qrSize + 262);
-  context.fillStyle = '#71717a';
-  context.font = '25px Arial, sans-serif';
-  context.fillText('Đưa mã này cho nhân viên khi vào cổng.', 100, 1650);
   return canvas;
 }
 

@@ -72,7 +72,7 @@ export function AdminOrderDetailPage() {
     <section>
       <Link
         to="/admin/don-hang"
-        className="inline-flex items-center gap-2 text-sm font-bold text-zinc-600 dark:text-zinc-300"
+        className="inline-flex items-center gap-2 text-sm font-bold text-zinc-600"
       >
         <ArrowLeft size={17} strokeWidth={1.8} /> Danh sách đơn
       </Link>
@@ -83,14 +83,14 @@ export function AdminOrderDetailPage() {
         </div>
         <StatusBadge status={order.status} />
       </div>
-      <div className="mt-7 grid gap-px overflow-hidden rounded-md border border-zinc-200 bg-zinc-200 sm:grid-cols-2 lg:grid-cols-4 dark:border-zinc-800 dark:bg-zinc-800">
+      <div className="mt-7 grid gap-px overflow-hidden rounded-md border border-zinc-200 bg-zinc-200 sm:grid-cols-2 lg:grid-cols-4">
         {[
           ['Người mua', order.buyerName],
           ['Email', order.buyerEmail],
           ['Số vé', `${order.quantity}`],
           ['Tổng tiền', currency.format(order.totalAmountVnd)],
         ].map(([label, value]) => (
-          <div key={label} className="min-w-0 bg-white p-5 dark:bg-zinc-900">
+          <div key={label} className="min-w-0 bg-white p-5">
             <p className="text-sm text-zinc-500">{label}</p>
             <p className="mt-2 break-words font-black">{value}</p>
           </div>
@@ -99,7 +99,7 @@ export function AdminOrderDetailPage() {
 
       {message ? <p className="mt-5 text-sm font-bold text-emerald-600">{message}</p> : null}
       {action.isError ? (
-        <p className="mt-5 rounded-md bg-coral-500/10 p-4 text-sm font-bold text-coral-600">
+        <p className="mt-5 rounded-md bg-brand-magenta-500/10 p-4 text-sm font-bold text-brand-magenta-600">
           {getApiErrorMessage(action.error, 'Thao tác thất bại.')}
         </p>
       ) : null}
@@ -110,14 +110,14 @@ export function AdminOrderDetailPage() {
           {['pending_payment', 'expired', 'cancelled', 'payment_review'].includes(order.status) ? (
             <form
               onSubmit={(event) => submitPayment(event)}
-              className="mt-4 grid gap-3 rounded-md border border-zinc-200 bg-white p-4 sm:p-5 dark:border-zinc-800 dark:bg-zinc-900"
+              className="mt-4 grid gap-3 rounded-md border border-zinc-200 bg-white p-4 sm:p-5"
             >
               <label className="grid gap-1 text-sm font-bold">
                 Mã giao dịch
                 <input
                   required
                   name="transactionReference"
-                  className="h-11 min-w-0 rounded-md border border-zinc-300 bg-transparent px-3 dark:border-zinc-700"
+                  className="h-11 min-w-0 rounded-md border border-zinc-300 bg-transparent px-3"
                 />
               </label>
               <div className="grid gap-3 sm:grid-cols-2">
@@ -129,7 +129,7 @@ export function AdminOrderDetailPage() {
                     type="number"
                     defaultValue={order.totalAmountVnd}
                     inputMode="numeric"
-                    className="h-11 min-w-0 rounded-md border border-zinc-300 bg-transparent px-3 dark:border-zinc-700"
+                    className="h-11 min-w-0 rounded-md border border-zinc-300 bg-transparent px-3"
                   />
                 </label>
                 <label className="grid gap-1 text-sm font-bold">
@@ -139,7 +139,7 @@ export function AdminOrderDetailPage() {
                     name="occurredAt"
                     type="datetime-local"
                     defaultValue={nowLocalInput()}
-                    className="h-11 min-w-0 rounded-md border border-zinc-300 bg-transparent px-3 dark:border-zinc-700"
+                    className="h-11 min-w-0 rounded-md border border-zinc-300 bg-transparent px-3"
                   />
                 </label>
               </div>
@@ -147,12 +147,12 @@ export function AdminOrderDetailPage() {
                 Ghi chú
                 <input
                   name="notes"
-                  className="h-11 min-w-0 rounded-md border border-zinc-300 bg-transparent px-3 dark:border-zinc-700"
+                  className="h-11 min-w-0 rounded-md border border-zinc-300 bg-transparent px-3"
                 />
               </label>
               <button
                 disabled={action.isPending}
-                className="inline-flex h-11 items-center justify-center gap-2 rounded-md bg-coral-600 px-4 font-bold text-white"
+                className="inline-flex h-11 items-center justify-center gap-2 rounded-md bg-brand-magenta-600 px-4 font-bold text-white"
               >
                 <Banknote size={18} strokeWidth={1.8} /> Ghi nhận chuyển khoản
               </button>
@@ -163,7 +163,7 @@ export function AdminOrderDetailPage() {
               onClick={() =>
                 action.mutate(() => cancelAdminOrder(reference, 'Quản trị viên hủy đơn', csrf))
               }
-              className="mt-4 inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-md border border-coral-500 px-4 py-2 text-center font-bold text-coral-600 sm:w-auto"
+              className="mt-4 inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-md border border-brand-magenta-500 px-4 py-2 text-center font-bold text-brand-magenta-600 sm:w-auto"
             >
               <Ban size={17} /> Hủy đơn
             </button>
@@ -175,7 +175,7 @@ export function AdminOrderDetailPage() {
                   requestOrderRefund(reference, 'Quản trị viên yêu cầu hoàn tiền', csrf),
                 )
               }
-              className="mt-4 inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-md border border-coral-500 px-4 py-2 text-center font-bold text-coral-600 sm:w-auto"
+              className="mt-4 inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-md border border-brand-magenta-500 px-4 py-2 text-center font-bold text-brand-magenta-600 sm:w-auto"
             >
               <RotateCcw size={17} /> Yêu cầu hoàn tiền
             </button>
@@ -183,19 +183,19 @@ export function AdminOrderDetailPage() {
           {order.status === 'refund_pending' ? (
             <form
               onSubmit={(event) => submitPayment(event, true)}
-              className="mt-4 grid gap-3 rounded-md border border-zinc-200 bg-white p-4 sm:p-5 dark:border-zinc-800 dark:bg-zinc-900"
+              className="mt-4 grid gap-3 rounded-md border border-zinc-200 bg-white p-4 sm:p-5"
             >
               <label className="grid gap-1 text-sm font-bold">
                 Mã giao dịch hoàn
                 <input
                   required
                   name="transactionReference"
-                  className="h-11 min-w-0 rounded-md border border-zinc-300 bg-transparent px-3 dark:border-zinc-700"
+                  className="h-11 min-w-0 rounded-md border border-zinc-300 bg-transparent px-3"
                 />
               </label>
               <input type="hidden" name="amountVnd" value={order.totalAmountVnd} />
               <input type="hidden" name="occurredAt" value={nowLocalInput()} />
-              <button className="h-11 rounded-md bg-coral-600 px-4 font-bold text-white">
+              <button className="h-11 rounded-md bg-brand-magenta-600 px-4 font-bold text-white">
                 Xác nhận đã hoàn {currency.format(order.totalAmountVnd)}
               </button>
             </form>
@@ -204,13 +204,13 @@ export function AdminOrderDetailPage() {
 
         <section>
           <h2 className="text-lg font-black">Vé trong đơn</h2>
-          <div className="mt-4 overflow-hidden rounded-md border border-zinc-200 bg-white dark:border-zinc-800 dark:bg-zinc-900">
+          <div className="mt-4 overflow-hidden rounded-md border border-zinc-200 bg-white">
             {order.tickets?.length ? (
               order.tickets.map((ticket) => (
                 <Link
                   key={ticket.code}
                   to={`/admin/ve/${ticket.code}`}
-                  className="flex min-h-20 items-center justify-between gap-3 border-b border-zinc-200 p-4 last:border-b-0 dark:border-zinc-800"
+                  className="flex min-h-20 items-center justify-between gap-3 border-b border-zinc-200 p-4 last:border-b-0"
                 >
                   <span className="min-w-0">
                     <strong className="block break-all">{ticket.code}</strong>
@@ -237,7 +237,7 @@ export function AdminOrderDetailPage() {
             .map((item) => (
               <div
                 key={item.id}
-                className="mt-3 flex flex-wrap items-center justify-between gap-4 rounded-md border border-zinc-200 bg-white p-4 dark:border-zinc-800 dark:bg-zinc-900"
+                className="mt-3 flex flex-wrap items-center justify-between gap-4 rounded-md border border-zinc-200 bg-white p-4"
               >
                 <div>
                   <StatusBadge status={item.matchStatus} />
@@ -259,7 +259,7 @@ export function AdminOrderDetailPage() {
                         ),
                       )
                     }
-                    className="min-h-11 rounded-md border border-zinc-300 px-3 py-2 text-sm font-bold dark:border-zinc-700"
+                    className="min-h-11 rounded-md border border-zinc-300 px-3 py-2 text-sm font-bold"
                   >
                     Bỏ qua
                   </button>
@@ -277,7 +277,7 @@ export function AdminOrderDetailPage() {
                         ),
                       )
                     }
-                    className="min-h-11 rounded-md bg-coral-600 px-3 py-2 text-sm font-bold text-white"
+                    className="min-h-11 rounded-md bg-brand-magenta-600 px-3 py-2 text-sm font-bold text-white"
                   >
                     Chấp nhận
                   </button>
@@ -288,7 +288,7 @@ export function AdminOrderDetailPage() {
       ) : null}
       <section className="mt-10">
         <h2 className="text-lg font-black">Lịch sử đơn hàng</h2>
-        <div className="mt-4 border-l border-zinc-300 pl-5 dark:border-zinc-700">
+        <div className="mt-4 border-l border-zinc-300 pl-5">
           {order.events?.map((event, index) => (
             <div key={`${event.action}-${index}`} className="pb-5">
               <strong>{event.action}</strong>

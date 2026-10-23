@@ -233,11 +233,11 @@ export function CheckInPage() {
   if (!authQuery.data?.authenticated)
     return (
       <section className="mx-auto min-h-[60dvh] max-w-4xl px-4 py-16">
-        <ScanLine className="text-coral-600" size={30} />
+        <ScanLine className="text-brand-magenta-600" size={30} />
         <h1 className="mt-5 text-3xl font-black">Đăng nhập để soát vé</h1>
         <a
           href={getGoogleLoginUrl('/check-in')}
-          className="mt-7 inline-flex h-12 items-center rounded-md bg-coral-600 px-5 font-bold text-white"
+          className="mt-7 inline-flex h-12 items-center rounded-md bg-brand-navy-600 px-5 font-bold text-white"
         >
           Đăng nhập Google
         </a>
@@ -261,14 +261,14 @@ export function CheckInPage() {
   return (
     <section className="mx-auto max-w-6xl px-4 pb-10 pt-5 sm:px-6 sm:py-8 lg:px-8">
       <div className="flex items-center gap-3">
-        <ScanLine className="text-coral-600" size={28} />
+        <ScanLine className="text-brand-magenta-600" size={28} />
         <div>
           <h1 className="text-3xl font-black">Soát vé</h1>
           <p className="mt-1 text-sm text-zinc-500">Quét QR hoặc nhập mã vé.</p>
         </div>
       </div>
       <div className="mt-5 grid gap-5 sm:mt-7 sm:gap-7 lg:grid-cols-[1.2fr_0.8fr]">
-        <section className="overflow-hidden rounded-md border border-zinc-200 bg-zinc-950 dark:border-zinc-800">
+        <section className="overflow-hidden rounded-md border border-zinc-200 bg-zinc-950">
           <div className="relative aspect-[4/3] max-h-[55dvh] min-h-64">
             <video ref={videoRef} muted playsInline className="h-full w-full object-cover" />
             {cameraActive ? (
@@ -299,7 +299,7 @@ export function CheckInPage() {
             ) : (
               <button
                 onClick={startCamera}
-                className="inline-flex min-h-12 flex-1 items-center justify-center gap-2 rounded-md bg-coral-600 px-4 font-bold text-white sm:flex-none"
+                className="inline-flex min-h-12 flex-1 items-center justify-center gap-2 rounded-md bg-brand-magenta-600 px-4 font-bold text-white sm:flex-none"
               >
                 <Camera size={17} /> Mở camera sau
               </button>
@@ -324,7 +324,7 @@ export function CheckInPage() {
         <section>
           <form
             onSubmit={submitCode}
-            className="rounded-md border border-zinc-200 bg-white p-5 dark:border-zinc-800 dark:bg-zinc-900"
+            className="rounded-md border border-zinc-200 bg-white p-5"
           >
             <label className="grid gap-2 font-bold">
               <span className="flex items-center gap-2">
@@ -338,17 +338,17 @@ export function CheckInPage() {
                   event.currentTarget.value = event.currentTarget.value.toUpperCase();
                 }}
                 placeholder="Quét QR hoặc nhập GT-..."
-                className="h-12 rounded-md border border-zinc-300 bg-transparent px-3 font-mono uppercase dark:border-zinc-700"
+                className="h-12 rounded-md border border-zinc-300 bg-transparent px-3 font-mono uppercase"
               />
             </label>
-            <button className="mt-3 h-11 w-full rounded-md bg-coral-600 px-4 font-bold text-white">
+            <button className="mt-3 h-11 w-full rounded-md bg-brand-magenta-600 px-4 font-bold text-white">
               Kiểm tra vé
             </button>
           </form>
           {error && !result ? (
             <p
               role="alert"
-              className="mt-4 rounded-md bg-coral-500/10 p-4 font-bold text-coral-600"
+              className="mt-4 rounded-md bg-red-50 p-4 font-bold text-red-700"
             >
               {error}
             </p>
@@ -365,17 +365,17 @@ export function CheckInPage() {
           aria-modal="true"
           aria-labelledby="check-in-result-title"
         >
-          <div className="w-full max-w-md rounded-md bg-white p-5 shadow-2xl dark:bg-zinc-900 sm:p-6">
+          <div className="w-full max-w-md rounded-md bg-white p-5 shadow-2xl sm:p-6">
             <div className="flex items-start justify-between gap-4">
               <div
-                className={`grid size-11 shrink-0 place-items-center rounded-md ${result.result === 'success' ? 'bg-emerald-100 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-400' : 'bg-coral-100 text-coral-700 dark:bg-coral-950 dark:text-coral-400'}`}
+                className={`grid size-11 shrink-0 place-items-center rounded-md ${result.result === 'success' ? 'bg-emerald-100 text-emerald-700' : 'bg-red-100 text-red-700'}`}
               >
                 {result.result === 'success' ? <CheckCircle2 size={24} /> : <ScanLine size={24} />}
               </div>
               <button
                 type="button"
                 onClick={closeResult}
-                className="grid size-10 place-items-center rounded-md text-zinc-500 transition hover:bg-zinc-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-coral-500 dark:hover:bg-zinc-800"
+                className="grid size-10 place-items-center rounded-md text-zinc-500 transition hover:bg-zinc-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-cyan-500"
                 aria-label="Đóng"
               >
                 <X size={20} />
@@ -434,13 +434,13 @@ export function CheckInPage() {
                   <RotateCcw size={16} /> Hoàn tác
                 </button>
               ) : null}
-              {error ? <p className="mt-4 text-sm font-bold text-coral-600">{error}</p> : null}
+              {error ? <p className="mt-4 text-sm font-bold text-red-600">{error}</p> : null}
               <div className="mt-6 flex gap-3">
                 <button
                   type="button"
                   onClick={closeResult}
                   disabled={confirming}
-                  className="h-11 flex-1 rounded-md border border-zinc-300 px-4 font-bold transition hover:bg-zinc-50 disabled:opacity-50 dark:border-zinc-700 dark:hover:bg-zinc-800"
+                  className="h-11 flex-1 rounded-md border border-zinc-300 px-4 font-bold transition hover:bg-zinc-50 disabled:opacity-50"
                 >
                   {pendingScan && result.result === 'success' ? 'Quét lại' : 'Đóng'}
                 </button>

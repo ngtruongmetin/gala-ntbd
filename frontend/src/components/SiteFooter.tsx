@@ -36,7 +36,7 @@ export function SiteFooter() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="border-t-2 border-coral-500 bg-zinc-900 text-zinc-300">
+    <footer className="border-t-2 border-brand-magenta-500 bg-brand-navy text-zinc-300">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="grid gap-10 py-12 lg:grid-cols-[minmax(0,1fr)_minmax(26rem,0.9fr)] lg:gap-16 lg:py-14">
           <div className="max-w-xl">
@@ -54,7 +54,7 @@ export function SiteFooter() {
                 className="size-14 shrink-0"
               />
             </div>
-            <p className="mt-6 flex items-center gap-2 text-sm font-semibold text-coral-400">
+            <p className="mt-6 flex items-center gap-2 text-sm font-semibold text-brand-cyan-500">
               <ShieldCheck size={18} aria-hidden="true" /> Kênh thông tin chính thức
             </p>
             <h2 className="mt-3 text-2xl font-black leading-tight text-white sm:text-3xl">
@@ -72,10 +72,10 @@ export function SiteFooter() {
                 key={href}
                 href={href}
                 {...(external ? { target: '_blank', rel: 'noreferrer' } : {})}
-                className="group flex min-h-20 items-center gap-3 border-b border-zinc-700/80 py-4 transition-colors hover:border-coral-500 focus-visible:border-coral-500"
+                className="group flex min-h-20 items-center gap-3 border-b border-zinc-700/80 py-4 transition-colors hover:border-brand-magenta-500 focus-visible:border-brand-magenta-500"
                 aria-label={external ? `${label} (mở trong tab mới)` : label}
               >
-                <span className="grid size-10 shrink-0 place-items-center rounded-md bg-zinc-800 text-coral-400 transition-colors group-hover:bg-coral-600 group-hover:text-white">
+                <span className="grid size-10 shrink-0 place-items-center rounded-md bg-zinc-800 text-brand-magenta-400 transition-colors group-hover:bg-brand-magenta-600 group-hover:text-white">
                   <Icon size={18} aria-hidden="true" />
                 </span>
                 <span className="min-w-0">
@@ -95,10 +95,10 @@ export function SiteFooter() {
             href="#page-top"
             aria-label="Về đầu trang"
             title="Về đầu trang"
-            className="inline-flex min-h-11 items-center gap-2 self-start font-semibold text-zinc-300 transition-colors hover:text-coral-400 sm:self-auto"
+            className="inline-flex min-h-11 items-center gap-2 self-start font-semibold text-zinc-300 transition-colors hover:text-brand-magenta-400 sm:self-auto"
           >
             Về đầu trang
-            <span className="grid size-9 place-items-center rounded-md border border-zinc-700 transition-colors group-hover:border-coral-500">
+            <span className="grid size-9 place-items-center rounded-md border border-zinc-700 transition-colors group-hover:border-brand-magenta-500">
               <ArrowUp size={17} aria-hidden="true" />
             </span>
           </a>

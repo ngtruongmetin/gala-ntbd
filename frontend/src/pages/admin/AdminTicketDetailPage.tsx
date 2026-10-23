@@ -34,7 +34,7 @@ export function AdminTicketDetailPage() {
     <section>
       <Link
         to="/admin/ve"
-        className="inline-flex items-center gap-2 text-sm font-bold text-zinc-600 dark:text-zinc-300"
+        className="inline-flex items-center gap-2 text-sm font-bold text-zinc-600"
       >
         <ArrowLeft size={17} /> Danh sách vé
       </Link>
@@ -45,7 +45,7 @@ export function AdminTicketDetailPage() {
         </div>
         <StatusBadge status={ticket.status} />
       </div>
-      <dl className="mt-7 grid gap-px overflow-hidden rounded-md border border-zinc-200 bg-zinc-200 sm:grid-cols-2 lg:grid-cols-4 dark:border-zinc-800 dark:bg-zinc-800">
+      <dl className="mt-7 grid gap-px overflow-hidden rounded-md border border-zinc-200 bg-zinc-200 sm:grid-cols-2 lg:grid-cols-4">
         {[
           ['Đơn hàng', ticket.orderReference],
           ['Người mua', ticket.buyerName],
@@ -59,14 +59,14 @@ export function AdminTicketDetailPage() {
               : 'Chưa sử dụng',
           ],
         ].map(([label, value]) => (
-          <div key={label} className="bg-white p-5 dark:bg-zinc-900">
+          <div key={label} className="bg-white p-5">
             <dt className="text-sm text-zinc-500">{label}</dt>
             <dd className="mt-2 break-words font-black">{value}</dd>
           </div>
         ))}
       </dl>
       {action.isError ? (
-        <p className="mt-5 rounded-md bg-coral-500/10 p-4 font-bold text-coral-600">
+        <p className="mt-5 rounded-md bg-brand-magenta-500/10 p-4 font-bold text-brand-magenta-600">
           {getApiErrorMessage(action.error, 'Thao tác thất bại.')}
         </p>
       ) : null}
@@ -79,7 +79,7 @@ export function AdminTicketDetailPage() {
                   reissueAdminTicketQr(code, 'Cấp lại mã QR theo yêu cầu quản trị viên', csrf),
                 )
               }
-              className="inline-flex min-h-11 items-center justify-center gap-2 rounded-md border border-zinc-300 px-4 py-2 text-center font-bold dark:border-zinc-700"
+              className="inline-flex min-h-11 items-center justify-center gap-2 rounded-md border border-zinc-300 px-4 py-2 text-center font-bold"
             >
               <QrCode size={17} /> Cấp lại QR
             </button>
@@ -87,7 +87,7 @@ export function AdminTicketDetailPage() {
               onClick={() =>
                 action.mutate(() => voidAdminTicket(code, 'Quản trị viên thu hồi vé', csrf))
               }
-              className="inline-flex min-h-11 items-center justify-center gap-2 rounded-md border border-coral-500 px-4 py-2 text-center font-bold text-coral-600"
+              className="inline-flex min-h-11 items-center justify-center gap-2 rounded-md border border-brand-magenta-500 px-4 py-2 text-center font-bold text-brand-magenta-600"
             >
               <ShieldX size={17} /> Thu hồi vé
             </button>
@@ -100,7 +100,7 @@ export function AdminTicketDetailPage() {
                 reactivateAdminTicket(code, 'Quản trị viên kích hoạt lại vé', csrf),
               )
             }
-            className="inline-flex min-h-11 items-center justify-center gap-2 rounded-md bg-coral-600 px-4 py-2 text-center font-bold text-white"
+            className="inline-flex min-h-11 items-center justify-center gap-2 rounded-md bg-brand-magenta-600 px-4 py-2 text-center font-bold text-white"
           >
             <RotateCcw size={17} /> Kích hoạt lại và đổi QR
           </button>
@@ -108,7 +108,7 @@ export function AdminTicketDetailPage() {
       </div>
       <section className="mt-10">
         <h2 className="text-lg font-black">Lịch sử vé</h2>
-        <div className="mt-4 border-l border-zinc-300 pl-5 dark:border-zinc-700">
+        <div className="mt-4 border-l border-zinc-300 pl-5">
           {ticket.events?.map((event, index) => (
             <div key={`${event.action}-${index}`} className="pb-5">
               <strong>{event.action}</strong>

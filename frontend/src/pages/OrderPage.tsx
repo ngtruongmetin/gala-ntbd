@@ -75,24 +75,24 @@ export function OrderPage() {
       <section className="mx-auto min-h-[calc(100dvh-5rem)] max-w-5xl px-4 py-16 sm:px-6 lg:px-8">
         <Link
           to="/"
-          className="inline-flex items-center gap-2 text-sm font-semibold text-zinc-600 dark:text-zinc-300"
+          className="inline-flex items-center gap-2 text-sm font-semibold text-zinc-600"
         >
           <ArrowLeft aria-hidden="true" size={17} strokeWidth={1.8} /> Trang sự kiện
         </Link>
-        <div className="mt-12 max-w-xl border-l-4 border-coral-600 pl-6">
+        <div className="mt-12 max-w-xl border-l-4 border-brand-magenta-600 pl-6">
           <h1 className="text-3xl font-black sm:text-4xl">Đăng nhập để đặt vé</h1>
-          <p className="mt-4 leading-relaxed text-zinc-600 dark:text-zinc-300">
+          <p className="mt-4 leading-relaxed text-zinc-600">
             Email xác minh từ Google sẽ được dùng cho đơn hàng của bạn.
           </p>
           {auth?.googleAuthAvailable ? (
             <a
               href={getGoogleLoginUrl('/dat-ve')}
-              className="mt-7 inline-flex h-12 items-center gap-2 rounded-md bg-coral-600 px-5 font-bold text-white hover:bg-coral-500"
+              className="mt-7 inline-flex h-12 items-center gap-2 rounded-md bg-brand-navy-600 px-5 font-bold text-white hover:bg-brand-navy-500"
             >
               <LogIn aria-hidden="true" size={18} strokeWidth={1.8} /> Đăng nhập Google
             </a>
           ) : (
-            <p className="mt-7 font-semibold text-coral-600 dark:text-coral-400">
+            <p className="mt-7 font-semibold text-brand-magenta-600">
               Đăng nhập hiện chưa sẵn sàng.
             </p>
           )}
@@ -105,10 +105,10 @@ export function OrderPage() {
     return (
       <section className="mx-auto min-h-[60dvh] max-w-5xl px-4 py-16 sm:px-6 lg:px-8">
         <h1 className="text-3xl font-black">Chưa thể đặt vé</h1>
-        <p className="mt-4 text-zinc-600 dark:text-zinc-300">
+        <p className="mt-4 text-zinc-600">
           Cửa bán vé hiện không mở. Trạng thái trên trang sự kiện là thông tin mới nhất.
         </p>
-        <Link to="/" className="mt-7 inline-flex font-bold text-coral-600 dark:text-coral-400">
+        <Link to="/" className="mt-7 inline-flex font-bold text-brand-magenta-600">
           Về trang sự kiện
         </Link>
       </section>
@@ -118,11 +118,11 @@ export function OrderPage() {
   const estimatedTotal = Number.isFinite(quantity) ? event.ticketPriceVnd * quantity : 0;
 
   return (
-    <section className="bg-zinc-50 py-12 dark:bg-zinc-950 sm:py-16">
+    <section className="bg-zinc-50 py-12 sm:py-16">
       <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
         <Link
           to="/"
-          className="inline-flex items-center gap-2 text-sm font-semibold text-zinc-600 dark:text-zinc-300"
+          className="inline-flex items-center gap-2 text-sm font-semibold text-zinc-600"
         >
           <ArrowLeft aria-hidden="true" size={17} strokeWidth={1.8} /> Trang sự kiện
         </Link>
@@ -139,10 +139,10 @@ export function OrderPage() {
                       inputEvent.currentTarget.value.toLocaleUpperCase('vi-VN');
                   }}
                   autoComplete="name"
-                  className="h-12 rounded-md border border-zinc-300 bg-white px-4 font-normal outline-none focus:border-coral-600 focus:ring-2 focus:ring-coral-600/20 dark:border-zinc-700 dark:bg-zinc-900"
+                  className="h-12 rounded-md border border-zinc-300 bg-white px-4 font-normal outline-none focus:border-brand-cyan-600 focus:ring-2 focus:ring-brand-cyan-600/20"
                 />
                 {errors.fullName ? (
-                  <span className="text-sm text-coral-600 dark:text-coral-400">
+                  <span className="text-sm text-red-600">
                     {errors.fullName.message}
                   </span>
                 ) : null}
@@ -153,10 +153,10 @@ export function OrderPage() {
                   {...register('phone')}
                   inputMode="tel"
                   autoComplete="tel"
-                  className="h-12 rounded-md border border-zinc-300 bg-white px-4 font-normal outline-none focus:border-coral-600 focus:ring-2 focus:ring-coral-600/20 dark:border-zinc-700 dark:bg-zinc-900"
+                  className="h-12 rounded-md border border-zinc-300 bg-white px-4 font-normal outline-none focus:border-brand-cyan-600 focus:ring-2 focus:ring-brand-cyan-600/20"
                 />
                 {errors.phone ? (
-                  <span className="text-sm text-coral-600 dark:text-coral-400">
+                  <span className="text-sm text-red-600">
                     {errors.phone.message}
                   </span>
                 ) : null}
@@ -167,7 +167,7 @@ export function OrderPage() {
                   value={auth.user?.email ?? ''}
                   readOnly
                   aria-readonly="true"
-                  className="h-12 rounded-md border border-zinc-300 bg-zinc-100 px-4 font-normal text-zinc-600 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-300"
+                  className="h-12 rounded-md border border-zinc-300 bg-zinc-100 px-4 font-normal text-zinc-600"
                 />
               </label>
               <label className="grid gap-2 font-semibold">
@@ -177,16 +177,16 @@ export function OrderPage() {
                   min={event.minTicketsPerOrder}
                   max={event.maxTicketsPerOrder}
                   {...register('quantity', { valueAsNumber: true })}
-                  className="h-12 rounded-md border border-zinc-300 bg-white px-4 font-normal outline-none focus:border-coral-600 focus:ring-2 focus:ring-coral-600/20 dark:border-zinc-700 dark:bg-zinc-900"
+                  className="h-12 rounded-md border border-zinc-300 bg-white px-4 font-normal outline-none focus:border-brand-cyan-600 focus:ring-2 focus:ring-brand-cyan-600/20"
                 />
-                <span className="text-sm font-normal text-zinc-500 dark:text-zinc-400">
+                <span className="text-sm font-normal text-zinc-500">
                   Từ {event.minTicketsPerOrder} đến {event.maxTicketsPerOrder} vé mỗi đơn.
                 </span>
               </label>
               {orderMutation.isError ? (
                 <p
                   role="alert"
-                  className="rounded-md bg-coral-500/10 p-4 text-sm font-semibold text-coral-700 dark:text-coral-400"
+                  className="rounded-md bg-red-50 p-4 text-sm font-semibold text-red-700"
                 >
                   {getApiErrorMessage(orderMutation.error, 'Không thể tạo đơn. Vui lòng thử lại.')}
                 </p>
@@ -194,33 +194,33 @@ export function OrderPage() {
               <button
                 type="submit"
                 disabled={orderMutation.isPending}
-                className="inline-flex h-12 w-full items-center justify-center gap-2 rounded-md bg-coral-600 px-5 text-center font-bold text-white hover:bg-coral-500 active:translate-y-px disabled:cursor-wait disabled:opacity-60"
+                className="inline-flex h-12 w-full items-center justify-center gap-2 rounded-md bg-brand-magenta-600 px-5 text-center font-bold text-white hover:bg-brand-magenta-500 active:translate-y-px disabled:cursor-wait disabled:opacity-60"
               >
                 <LockKeyhole aria-hidden="true" size={18} strokeWidth={1.8} />
                 {orderMutation.isPending ? 'Đang phát hành vé...' : 'Xác nhận và nhận vé'}
               </button>
             </form>
           </div>
-          <aside className="order-first h-fit rounded-md border border-zinc-200 bg-white p-5 lg:order-none lg:sticky lg:top-6 lg:p-6 dark:border-zinc-800 dark:bg-zinc-900">
-            <div className="flex items-center gap-3 text-coral-600 dark:text-coral-400">
+          <aside className="order-first h-fit rounded-md border border-zinc-200 bg-white p-5 lg:order-none lg:sticky lg:top-6 lg:p-6">
+            <div className="flex items-center gap-3 text-brand-magenta-600">
               <Ticket aria-hidden="true" size={20} strokeWidth={1.8} />
               <h2 className="font-bold">Tóm tắt đơn</h2>
             </div>
             <dl className="mt-6 grid gap-4 text-sm">
               <div className="flex justify-between gap-4">
-                <dt className="text-zinc-500 dark:text-zinc-400">Đơn giá</dt>
+                <dt className="text-zinc-500">Đơn giá</dt>
                 <dd className="font-bold">{currency.format(event.ticketPriceVnd)}</dd>
               </div>
               <div className="flex justify-between gap-4">
-                <dt className="text-zinc-500 dark:text-zinc-400">Số lượng</dt>
+                <dt className="text-zinc-500">Số lượng</dt>
                 <dd className="font-bold">{Number.isFinite(quantity) ? quantity : 0}</dd>
               </div>
-              <div className="flex justify-between gap-4 border-t border-zinc-200 pt-4 dark:border-zinc-700">
+              <div className="flex justify-between gap-4 border-t border-zinc-200 pt-4">
                 <dt className="font-bold">Tạm tính</dt>
                 <dd className="text-lg font-black">{currency.format(estimatedTotal)}</dd>
               </div>
             </dl>
-            <p className="mt-6 text-sm leading-relaxed text-zinc-500 dark:text-zinc-400">
+            <p className="mt-6 text-sm leading-relaxed text-zinc-500">
               Hệ thống đang phát hành vé ngay sau khi đặt, chưa yêu cầu thanh toán. Giá trị đơn vẫn
               được lưu để phục vụ giai đoạn thanh toán sau này.
             </p>

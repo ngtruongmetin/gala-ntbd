@@ -31,21 +31,21 @@ export function AdminStaffPage() {
   return (
     <section>
       <h1 className="text-2xl font-black sm:text-3xl">Nhân sự</h1>
-      <p className="mt-2 text-sm text-zinc-500 dark:text-zinc-400">
+      <p className="mt-2 text-sm text-zinc-500">
         Cấp quyền cho người phụ trách quản trị hoặc soát vé.
       </p>
-      <div className="mt-7 rounded-md border border-zinc-200 bg-white p-5 dark:border-zinc-800 dark:bg-zinc-900">
+      <div className="mt-7 rounded-md border border-zinc-200 bg-white p-5">
         <h2 className="flex items-center gap-2 font-black">
-          <ShieldCheck className="text-coral-600" size={19} /> Chủ hệ thống
+          <ShieldCheck className="text-brand-magenta-600" size={19} /> Chủ hệ thống
         </h2>
-        <p className="mt-2 text-sm text-zinc-500 dark:text-zinc-400">
+        <p className="mt-2 text-sm text-zinc-500">
           Có toàn quyền quản trị và quản lý nhân sự.
         </p>
         <div className="mt-3 flex flex-wrap gap-2">
           {staffQuery.data.bootstrapSuperAdmins.map((email) => (
             <span
               key={email}
-              className="rounded-md bg-zinc-100 px-3 py-2 text-sm font-bold dark:bg-zinc-800"
+              className="rounded-md bg-zinc-100 px-3 py-2 text-sm font-bold"
             >
               {email}
             </span>
@@ -54,39 +54,39 @@ export function AdminStaffPage() {
       </div>
       <form
         onSubmit={submit}
-        className="mt-6 grid gap-3 rounded-md border border-zinc-200 bg-white p-4 md:grid-cols-[1fr_180px_auto] md:p-5 dark:border-zinc-800 dark:bg-zinc-900"
+        className="mt-6 grid gap-3 rounded-md border border-zinc-200 bg-white p-4 md:grid-cols-[1fr_180px_auto] md:p-5"
       >
         <input
           required
           name="email"
           type="email"
           placeholder="email@gmail.com"
-          className="h-11 rounded-md border border-zinc-300 bg-white px-3 text-zinc-950 dark:border-zinc-700 dark:bg-zinc-950 dark:text-zinc-50"
+          className="h-11 rounded-md border border-zinc-300 bg-white px-3 text-zinc-950"
         />
         <select
           name="role"
-          className="h-11 rounded-md border border-zinc-300 bg-white px-3 text-zinc-950 dark:border-zinc-700 dark:bg-zinc-950 dark:text-zinc-50"
+          className="h-11 rounded-md border border-zinc-300 bg-white px-3 text-zinc-950"
         >
           <option value="check_in">Nhân viên soát vé</option>
           <option value="admin">Quản trị viên</option>
         </select>
-        <button className="inline-flex h-11 items-center justify-center gap-2 rounded-md bg-coral-600 px-4 font-bold text-white">
+        <button className="inline-flex h-11 items-center justify-center gap-2 rounded-md bg-brand-magenta-600 px-4 font-bold text-white">
           <UserPlus size={17} /> Cấp quyền
         </button>
       </form>
       {mutation.isError ? (
-        <p className="mt-4 text-sm font-bold text-coral-600">
+        <p className="mt-4 text-sm font-bold text-brand-magenta-600">
           {getApiErrorMessage(mutation.error, 'Không thể cập nhật quyền.')}
         </p>
       ) : null}
-      <div className="mt-6 overflow-hidden rounded-md border border-zinc-200 bg-white dark:border-zinc-800 dark:bg-zinc-900">
+      <div className="mt-6 overflow-hidden rounded-md border border-zinc-200 bg-white">
         {staffQuery.data.grants.length === 0 ? (
           <p className="p-5 text-zinc-500">Chưa có quyền bổ sung.</p>
         ) : (
           staffQuery.data.grants.map((grant) => (
             <div
               key={grant.id}
-              className="flex flex-wrap items-center justify-between gap-4 border-b border-zinc-200 p-4 last:border-b-0 dark:border-zinc-800"
+              className="flex flex-wrap items-center justify-between gap-4 border-b border-zinc-200 p-4 last:border-b-0"
             >
               <div className="min-w-0">
                 <strong className="block break-all">{grant.email}</strong>
@@ -106,7 +106,7 @@ export function AdminStaffPage() {
                     ),
                   )
                 }
-                className="grid size-10 place-items-center rounded-md border border-coral-500 text-coral-600"
+                className="grid size-10 place-items-center rounded-md border border-brand-magenta-500 text-brand-magenta-600"
               >
                 <Trash2 size={17} />
                 <span className="sr-only">Thu hồi quyền</span>

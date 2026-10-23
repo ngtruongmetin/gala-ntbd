@@ -64,7 +64,7 @@ function TicketAction({ event }: { event: EventSettings }) {
     return (
       <Link
         to="/dat-ve"
-        className="inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-md bg-coral-600 px-5 text-center font-bold text-white transition hover:bg-coral-500 active:translate-y-px sm:w-auto"
+        className="inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-md bg-brand-magenta-600 px-5 text-center font-bold text-white transition hover:bg-brand-magenta-500 active:translate-y-px sm:w-auto"
       >
         <Ticket size={18} /> Đặt vé
       </Link>
@@ -73,7 +73,7 @@ function TicketAction({ event }: { event: EventSettings }) {
     return (
       <a
         href={getGoogleLoginUrl('/dat-ve')}
-        className="inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-md bg-coral-600 px-5 text-center font-bold text-white transition hover:bg-coral-500 active:translate-y-px sm:w-auto"
+        className="inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-md bg-brand-magenta-600 px-5 text-center font-bold text-white transition hover:bg-brand-magenta-500 active:translate-y-px sm:w-auto"
       >
         <LogIn size={18} /> Đăng nhập để đặt vé
       </a>
@@ -93,7 +93,7 @@ function OrdersAction({ inverse = false }: { inverse?: boolean }) {
   const auth = useAuth().data;
   const className = inverse
     ? 'inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-md border border-white/40 px-5 text-center font-bold text-white transition hover:border-white hover:bg-white/10 active:translate-y-px sm:w-auto'
-    : 'inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-md border border-zinc-300 px-5 text-center font-bold text-zinc-900 transition hover:border-coral-500 hover:text-coral-600 active:translate-y-px sm:w-auto dark:border-zinc-700 dark:text-zinc-50 dark:hover:border-coral-400 dark:hover:text-coral-400';
+    : 'inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-md border border-zinc-300 px-5 text-center font-bold text-zinc-900 transition hover:border-brand-cyan-500 hover:text-brand-cyan-600 active:translate-y-px sm:w-auto';
   const content = (
     <>
       <Layers3 size={18} /> Đơn hàng của tôi
@@ -152,7 +152,7 @@ export function HomePage() {
     <>
       <section
         id="page-top"
-        className="relative z-0 isolate min-h-[calc(100dvh-7rem)] overflow-hidden bg-zinc-900 sm:min-h-[calc(100dvh-8rem)]"
+        className="relative z-0 isolate min-h-[calc(100dvh-7rem)] overflow-hidden bg-brand-navy sm:min-h-[calc(100dvh-8rem)]"
       >
         <picture className="absolute inset-0 block">
           <source media="(max-width: 639px)" srcSet="/images/landing-mobile.png" />
@@ -176,7 +176,7 @@ export function HomePage() {
                 <button
                   type="button"
                   onClick={() => eventQuery.refetch()}
-                  className="mt-7 inline-flex min-h-12 items-center gap-2 rounded-md bg-coral-600 px-5 font-bold text-white"
+                  className="mt-7 inline-flex min-h-12 items-center gap-2 rounded-md bg-brand-magenta-600 px-5 font-bold text-white"
                 >
                   <RefreshCw size={18} /> Thử lại
                 </button>
@@ -184,7 +184,7 @@ export function HomePage() {
             ) : null}
             {event ? (
               <div className="hero-copy">
-                <p className="hero-reveal flex items-center gap-2 text-sm font-bold text-coral-400">
+                <p className="hero-reveal flex items-center gap-2 text-sm font-bold text-brand-magenta-400">
                   <HeartHandshake size={18} />{' '}
                   {event.eventSubtitle ?? 'Gây quỹ học bổng Cùng bạn đến trường'}
                 </p>
@@ -198,13 +198,13 @@ export function HomePage() {
                 <div className="hero-reveal mt-7 flex flex-wrap gap-x-6 gap-y-3 text-sm font-semibold text-zinc-200">
                   {event.eventStartsAt ? (
                     <span className="inline-flex items-center gap-2">
-                      <CalendarDays className="text-coral-400" size={18} />{' '}
+                      <CalendarDays className="text-brand-magenta-400" size={18} />{' '}
                       {dateTime.format(new Date(event.eventStartsAt))}
                     </span>
                   ) : null}
                   {event.venue ? (
                     <span className="inline-flex items-center gap-2">
-                      <MapPin className="text-coral-400" size={18} /> {event.venue}
+                      <MapPin className="text-brand-magenta-400" size={18} /> {event.venue}
                     </span>
                   ) : null}
                 </div>
@@ -220,7 +220,7 @@ export function HomePage() {
 
       {event ? (
         <>
-          <section className="ticker-shell relative z-10 overflow-hidden border-b border-coral-500 bg-coral-600 py-4 text-white">
+          <section className="ticker-shell relative z-10 overflow-hidden border-b border-brand-navy-500 bg-brand-navy-600 py-4 text-white">
             <div className="ticker-track flex w-max items-center" aria-label="Thông tin vé nhanh">
               {[0, 1].map((copy) => (
                 <div key={copy} className="flex shrink-0 items-center" aria-hidden={copy === 1}>
@@ -240,22 +240,22 @@ export function HomePage() {
               ))}
             </div>
           </section>
-          <section className="border-b border-zinc-200 bg-white py-16 dark:border-zinc-800 dark:bg-zinc-950 sm:py-24">
+          <section className="border-b border-zinc-200 bg-white py-16 sm:py-24">
             <Reveal className="mx-auto grid max-w-7xl gap-10 px-4 sm:px-6 lg:grid-cols-[0.8fr_1.2fr] lg:gap-20 lg:px-8">
               <div>
-                <p className="text-sm font-bold text-coral-600 dark:text-coral-400">
+                <p className="text-sm font-bold text-brand-navy-600">
                   Cùng bạn đến trường
                 </p>
                 <h2 className="mt-4 max-w-[13ch] text-3xl font-black leading-tight sm:text-5xl">
                   Một đêm vui, thêm một cơ hội học tập
                 </h2>
               </div>
-              <div className="max-w-2xl self-end border-l-2 border-coral-500 pl-6">
-                <p className="text-lg leading-relaxed text-zinc-700 dark:text-zinc-200 sm:text-xl">
+              <div className="max-w-2xl self-end border-l-2 border-brand-navy-500 pl-6">
+                <p className="text-lg leading-relaxed text-zinc-700 sm:text-xl">
                   Gala Sắc màu tuổi trẻ hướng đến gây quỹ học bổng Cùng bạn đến trường. Mỗi tấm vé
                   là một lời đồng hành, để niềm vui trong đêm gala có thể đi xa hơn sân khấu.
                 </p>
-                <p className="mt-5 leading-relaxed text-zinc-500 dark:text-zinc-400">
+                <p className="mt-5 leading-relaxed text-zinc-500">
                   Tham dự cùng bạn bè, lưu lại một buổi tối đáng nhớ và góp mặt trong hoạt động ý
                   nghĩa dành cho học sinh.
                 </p>
@@ -264,24 +264,24 @@ export function HomePage() {
           </section>
 
           <section
-            className="bg-zinc-50 py-16 dark:bg-zinc-900 sm:py-20"
+            className="bg-zinc-50 py-16 sm:py-20"
             aria-labelledby="ticket-information"
           >
             <Reveal className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
               <div className="flex flex-wrap items-end justify-between gap-4">
                 <div>
-                  <p className="text-sm font-bold text-coral-600 dark:text-coral-400">
+                  <p className="text-sm font-bold text-brand-navy-600">
                     Thông tin tham dự
                   </p>
                   <h2 id="ticket-information" className="mt-2 text-3xl font-black">
                     Vé gala
                   </h2>
                 </div>
-                <p className="text-sm text-zinc-500 dark:text-zinc-400">
+                <p className="text-sm text-zinc-500">
                   Còn {event.remainingQuantity.toLocaleString('vi-VN')} vé
                 </p>
               </div>
-              <dl className="mt-8 divide-y divide-zinc-300 border-y border-zinc-300 dark:divide-zinc-700 dark:border-zinc-700">
+              <dl className="mt-8 divide-y divide-zinc-300 border-y border-zinc-300">
                 <InfoRow label="Giá vé" value={currency.format(event.ticketPriceVnd)} large />
                 {event.eventStartsAt ? (
                   <InfoRow
@@ -294,31 +294,31 @@ export function HomePage() {
             </Reveal>
           </section>
 
-          <section className="border-y border-zinc-200 bg-white py-16 dark:border-zinc-800 dark:bg-zinc-950 sm:py-20">
+          <section className="border-y border-zinc-200 bg-white py-16 sm:py-20">
             <Reveal className="mx-auto grid max-w-7xl gap-10 px-4 sm:px-6 lg:grid-cols-[1.2fr_0.8fr] lg:items-end lg:px-8">
               <div>
-                <MapPinned className="text-coral-600" size={30} strokeWidth={1.7} />
-                <p className="mt-8 text-sm font-bold text-coral-600 dark:text-coral-400">
+                <MapPinned className="text-brand-navy-600" size={30} strokeWidth={1.7} />
+                <p className="mt-8 text-sm font-bold text-brand-navy-600">
                   Nơi diễn ra chương trình
                 </p>
                 <h2 className="mt-3 max-w-xl text-3xl font-black leading-tight sm:text-5xl">
                   Trường THPT Nguyễn Trãi - Bình Dương
                 </h2>
-                <p className="mt-5 max-w-xl leading-relaxed text-zinc-600 dark:text-zinc-300">
+                <p className="mt-5 max-w-xl leading-relaxed text-zinc-600">
                   Theo dõi fanpage nhà trường để cập nhật hoạt động và mở bản đồ khi cần chỉ đường
                   đến địa điểm tổ chức.
                 </p>
               </div>
-              <div className="border-l-2 border-coral-500 pl-5">
+              <div className="border-l-2 border-brand-navy-500 pl-5">
                 <a
                   href="https://maps.app.goo.gl/Crt2VzARMN2MKPSY6"
                   target="_blank"
                   rel="noreferrer"
                   aria-label="Mở vị trí Trường THPT Nguyễn Trãi - Bình Dương trên Google Maps"
-                  className="group flex min-h-16 items-center justify-between gap-4 border-b border-zinc-200 font-bold dark:border-zinc-800"
+                  className="group flex min-h-16 items-center justify-between gap-4 border-b border-zinc-200 font-bold"
                 >
                   <span className="flex items-center gap-3">
-                    <MapPin size={19} className="text-coral-600" /> Chỉ đường đến trường
+                    <MapPin size={19} className="text-brand-navy-600" /> Chỉ đường đến trường
                   </span>
                   <ExternalLink
                     size={17}
@@ -333,7 +333,7 @@ export function HomePage() {
                   className="group flex min-h-16 items-center justify-between gap-4 font-bold"
                 >
                   <span className="flex items-center gap-3">
-                    <MessagesSquare size={19} className="text-coral-600" /> Fanpage nhà trường
+                    <MessagesSquare size={19} className="text-brand-navy-600" /> Fanpage nhà trường
                   </span>
                   <ExternalLink
                     size={17}
@@ -346,7 +346,7 @@ export function HomePage() {
 
           {landingGallery.length ? (
             <section
-              className="bg-white py-16 dark:bg-zinc-950 sm:py-20"
+              className="bg-white py-16 sm:py-20"
               aria-labelledby="event-gallery"
             >
               <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -363,7 +363,7 @@ export function HomePage() {
                         loading="lazy"
                       />
                       {image.caption ? (
-                        <figcaption className="mt-3 text-sm text-zinc-500 dark:text-zinc-400">
+                        <figcaption className="mt-3 text-sm text-zinc-500">
                           {image.caption}
                         </figcaption>
                       ) : null}
@@ -377,7 +377,7 @@ export function HomePage() {
           <section className="bg-zinc-950 py-16 text-white sm:py-20">
             <div className="mx-auto flex max-w-7xl flex-col items-start justify-between gap-8 px-4 sm:px-6 lg:flex-row lg:items-end lg:px-8">
               <div>
-                <p className="text-sm font-bold text-coral-400">Hẹn gặp bạn tại gala</p>
+                <p className="text-sm font-bold text-brand-navy-600">Hẹn gặp bạn tại gala</p>
                 <h2 className="mt-3 max-w-xl text-3xl font-black leading-tight sm:text-5xl">
                   Cùng góp một sắc màu cho hành trình đến trường
                 </h2>
@@ -411,18 +411,18 @@ function PartnersSection({ partners }: { partners: EventPartner[] }) {
   const secondRow = partners.filter((_, index) => index % 2 === 1);
   const useMarquee = partners.length >= 8;
   return (
-    <section className="border-b border-zinc-200 bg-white py-14 dark:border-zinc-800 dark:bg-zinc-950 sm:py-20">
+    <section className="border-b border-zinc-200 bg-white py-14 sm:py-20">
       <Reveal>
-        <p className="text-center text-xs font-semibold uppercase text-zinc-500 dark:text-zinc-400">
+        <p className="mx-auto max-w-3xl text-center text-lg font-black leading-snug text-brand-navy-600 sm:text-2xl">
           Trân trọng sự đồng hành của các đơn vị cùng Gala Sắc màu tuổi trẻ
         </p>
         {useMarquee ? (
-          <div className="mt-8 space-y-2 overflow-hidden border-y border-zinc-200 py-2 dark:border-zinc-800">
+          <div className="mt-8 space-y-2 overflow-hidden border-y border-zinc-200 py-2">
             <PartnerMarqueeRow partners={firstRow} direction="forward" />
             <PartnerMarqueeRow partners={secondRow} direction="reverse" />
           </div>
         ) : (
-          <div className="partner-static mx-auto mt-8 flex max-w-5xl flex-wrap items-center justify-center gap-x-8 gap-y-4 border-y border-zinc-200 py-6 dark:border-zinc-800">
+          <div className="partner-static mx-auto mt-8 flex max-w-5xl flex-wrap items-center justify-center gap-x-8 gap-y-4 border-y border-zinc-200 py-6">
             {partners.map((partner) => (
               <PartnerLogo key={partner.id} partner={partner} staticLayout />
             ))}
@@ -465,7 +465,7 @@ function PartnerLogo({
   staticLayout?: boolean;
 }) {
   const className = `group relative flex h-24 w-40 shrink-0 items-center justify-center px-6 sm:h-28 sm:w-52 sm:px-8 ${
-    staticLayout ? '' : 'border-r border-zinc-200 dark:border-zinc-800'
+    staticLayout ? '' : 'border-r border-zinc-200'
   }`;
   const content = (
     <>
@@ -509,8 +509,8 @@ function InfoRow({
 }) {
   return (
     <div className="grid gap-2 py-5 sm:grid-cols-[minmax(12rem,0.7fr)_1.3fr] sm:items-center">
-      <dt className="text-sm font-semibold text-zinc-500 dark:text-zinc-400">{label}</dt>
-      <dd className={`flex items-center gap-2 font-bold ${large ? 'text-2xl tabular-nums' : ''}`}>
+      <dt className="text-sm font-semibold text-zinc-500">{label}</dt>
+      <dd className={`flex items-center gap-2 font-bold ${large ? 'text-2xl tabular-nums text-brand-gold-600' : ''}`}>
         {icon}
         {value}
       </dd>
